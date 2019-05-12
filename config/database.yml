@@ -23,7 +23,8 @@ default: &default
   host: localhost
   port: 5432
   username: rails
-  password: <%= ENV["PG_PASSWORD"] %>
+  password: <%= ENV.fetch('PG_PASSWORD')%>
+  #password: <%= ENV['PG_PASSWORD'] %>
 
 development:
   <<: *default
