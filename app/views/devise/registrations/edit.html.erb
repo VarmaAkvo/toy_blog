@@ -1,43 +1,47 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<div class="col-6 offset-3">
   <%= render "devise/shared/error_messages", resource: resource %>
+  <h2 class="bg-dark p-3 mb-0 text-white rounded-top">编辑账户</h2>
+  <div class="px-2">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <div class="field form-group pt-2">
+        <%= f.label :email, "邮箱" %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
+      <div class="field form-group">
+        <%= f.label :password, "新密码" %> <i>(如果你不想更改密码就留空)</i>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :password_confirmation, "再次输入新密码" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :current_password, "当前密码" %> <i>(我们需要该项来通过你的更改)</i><br />
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "更新", class: "btn btn-info btn-block" %>
+      </div>
     <% end %>
+
+    <h3 class="bg-dark p-3 mb-0 mt-2 text-white rounded-top">删除我的账户</h3>
+    <div class="p-2">
+      <p class="d-inline mr-2">不愉快?</p>
+      <%= button_to "删除账户", registration_path(resource_name), data: { confirm: "你确定?" }, method: :delete, class: "btn btn-info", form_class: "d-inline" %>
+    </div>
+
+    <%= link_to "返回", :back %>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</div>
