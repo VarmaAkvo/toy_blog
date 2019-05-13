@@ -59,5 +59,7 @@ cn:
       not_found: "不存在"
       not_locked: "没有被冻结"
       not_saved:
-        one: "1个错误阻止了该%{resource}存进数据库："
-        other: "%{count}个错误阻止了该%{resource}存进数据库："
+        one: "1个错误导致了失败："
+        other: "%{count}个错误导致了失败："
+        #one: "1个错误阻止了该%{resource}存进数据库："
+        #other: "%{count}个错误阻止了该%{resource}存进数据库："

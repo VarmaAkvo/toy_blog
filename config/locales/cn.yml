@@ -1,2 +1,9 @@
 cn:
   hello: "你好"
+  activerecord:
+    errors:
+      messages:
+        blank: "不能为空"
+        too_short: "太短"
+        confirmation: "不匹配"
+        taken: "已存在"
