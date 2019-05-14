@@ -1,1 +1,11 @@
 @import "~bootstrap/scss/bootstrap";
+
+.field_with_errors {
+  label {
+    color: #FF6666;
+  }
+  input, textarea {
+    border: 2px solid #FF6666;
+    border-radius: 0.5em;
+  }
+}

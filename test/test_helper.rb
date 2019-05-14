@@ -11,3 +11,7 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+# 引入Devise的相关测试辅助方法
+class ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+end
