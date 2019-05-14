@@ -16,8 +16,7 @@
             <%= current_user.name %>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <%= link_to "编辑账户", edit_user_registration_path, class: "dropdown-item" %>
             <div class="dropdown-divider"></div>
             <%= link_to '登出', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
           </div>
