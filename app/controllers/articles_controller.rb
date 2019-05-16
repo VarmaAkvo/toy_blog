@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :set_article, except: [:new, :create]
+  before_action :set_article, except: [:new, :create, :show]
   before_action :confirm_authority, only: [:edit, :update, :destroy]
 
   def new
@@ -8,6 +8,10 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @article = Article.with_rich_text_content_and_embeds.find(params[:id])
+    @owner   = @article.user
+    @pre_article = @owner.articles.where("created_at < ?", @article.created_at).order(:created_at).last
+    @next_article = @owner.articles.where("created_at > ?", @article.created_at).order(:created_at).first
   end
 
   def edit

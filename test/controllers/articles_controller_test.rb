@@ -71,13 +71,14 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update article' do
-    title, content = 'new_artcle', 'content'
+    title, content = 'new_artcle', '中文'
+    assert_not @article.content.body.to_s.include? content
     put user_article_path(@user.name, @article), params: { article: {
       title: title, content: content
       }}
     @article.reload
     assert_equal title,   @article.title
-    assert_equal content, @article.content
+    assert @article.content.body.to_s.include? content
     assert_redirected_to user_article_path(@user.name, @article)
   end
 
