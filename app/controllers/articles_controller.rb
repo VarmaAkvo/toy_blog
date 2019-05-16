@@ -1,7 +1,13 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_user!, except: :show
-  before_action :set_article, except: [:new, :create, :show]
+  before_action :authenticate_user!, except: [:show, :index]
+  before_action :set_article, except: [:new, :create, :show, :index]
+  before_action :set_owner, only: [:index, :show]
   before_action :confirm_authority, only: [:edit, :update, :destroy]
+
+  def index
+    # 当前with_rich_text_content_and_embeds并不能解决N+1问题， 留着等修复
+    @articles = @owner.articles.with_rich_text_content_and_embeds.order(created_at: :desc)
+  end
 
   def new
     @article = Article.new
@@ -9,7 +15,6 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.with_rich_text_content_and_embeds.find(params[:id])
-    @owner   = @article.user
     @pre_article = @owner.articles.where("created_at < ?", @article.created_at).order(:created_at).last
     @next_article = @owner.articles.where("created_at > ?", @article.created_at).order(:created_at).first
   end
@@ -47,6 +52,16 @@ class ArticlesController < ApplicationController
 
   def set_article
     @article ||= Article.find(params[:id])
+  end
+
+  def set_owner
+    # 如果当前文章的所有者就是当前用户则不再做一次查询
+    owner_name = params[:name].downcase
+    if user_signed_in? && current_user.name == owner_name
+      @owner = current_user
+    else
+      @owner = User.find_by!(name: owner_name)
+    end
   end
 
   def article_params

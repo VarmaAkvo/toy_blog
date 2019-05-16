@@ -7,8 +7,11 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
-  test 'can only get show without sign in' do
+  test 'can only get show and index without sign in' do
     sign_out @user
+    get user_articles_path(@user.name)
+    assert_response :success
+
     get new_article_path
     assert_response :redirect
 
@@ -44,6 +47,11 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Article.count') do
       delete user_article_path(@other.name, @other_article)
     end
+  end
+
+  test 'should get index' do
+    get user_articles_path(@user.name)
+    assert_response :success
   end
 
   test 'should get new' do

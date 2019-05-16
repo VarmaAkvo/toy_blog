@@ -1,0 +1,20 @@
+<div class="card mb-2">
+  <div class="card-body">
+    <h3 class="card-title border-bottom pb-2"><%= article.title %></h3>
+    <div class="d-flex justify-content-between pb-2">
+      <% if is_my_blog? %>
+        <div class="">
+          <%= link_to '更新', edit_user_article_path(current_user.name, article), class: 'btn btn-info btn-sm', role: 'button' %>
+          <%= link_to '删除该文章', user_article_url(current_user.name, article), method: :delete, data: {confirm: '你确定要删除它吗'}, class: 'btn btn-danger btn-sm', role: 'button'%>
+        </div>
+      <% end %>
+      <div class="">
+        <small class="text-secondary align-bottom"><%= article.created_at.strftime('%Y年%m月%d日 %H:%M') %></small>
+      </div>
+    </div>
+    <%= article.content %>
+    <% if params[:action] == 'index' %>
+      <%= link_to '评论', user_article_path(@owner.name, article), class: 'd-block text-right text-decoration-none' %>
+    <% end %>
+  </div>
+</div>

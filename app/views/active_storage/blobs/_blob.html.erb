@@ -9,7 +9,9 @@
     <% else %>
       <span class="attachment__name"><%= blob.filename %></span>
       <span class="attachment__size"><%= number_to_human_size blob.byte_size %></span>
-      <%= link_to 'download', rails_blob_path(blob, disposition: "attachment"), class: 'btn btn-info text-white ml-2', role: 'button' %>
+      <% unless blob.representable? %>
+        <%= link_to 'download', rails_blob_path(blob, disposition: "attachment"), class: 'btn btn-sm btn-success text-white', role: 'button' %>
+      <% end %>
     <% end %>
   </figcaption>
 </figure>
