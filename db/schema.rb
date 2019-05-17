@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_14_115620) do
+ActiveRecord::Schema.define(version: 2019_05_16_140435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,30 @@ ActiveRecord::Schema.define(version: 2019_05_14_115620) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["title"], name: "index_articles_on_title"
     t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "tagging", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.string "taggable_type", null: false
+    t.bigint "taggable_id", null: false
+    t.index ["tag_id"], name: "index_tagging_on_tag_id"
+    t.index ["taggable_type", "taggable_id", "tag_id"], name: "index_tagging_on_taggable_type_and_taggable_id_and_tag_id", unique: true
+    t.index ["taggable_type", "taggable_id"], name: "index_tagging_on_taggable_type_and_taggable_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "user_articles_tags_statistics", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tag_id", null: false
+    t.integer "total", null: false
+    t.index ["tag_id"], name: "index_user_articles_tags_statistics_on_tag_id"
+    t.index ["user_id", "tag_id"], name: "index_user_articles_tags_statistics_on_user_id_and_tag_id", unique: true
+    t.index ["user_id"], name: "index_user_articles_tags_statistics_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

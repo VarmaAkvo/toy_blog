@@ -1,0 +1,9 @@
+one:
+  taggable: one (Article)
+  tag: one
+two:
+  taggable: one (Article)
+  tag: two
+three:
+  taggable: three (User)
+  tag: one
