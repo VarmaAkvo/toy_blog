@@ -13,7 +13,7 @@ module Taggable
     self.class.transaction do
       if self.save and !tags.empty?
         # 去除重复tag
-        valid_tags = tags.split.uniq
+        valid_tags = pick_valid_tags(tags)
         add_tags(valid_tags)
       end
       self.valid?
@@ -24,7 +24,7 @@ module Taggable
     self.class.transaction do
       unless tags.empty?
         # 去除重复tag
-        valid_tags = tags.split.uniq
+        valid_tags = pick_valid_tags(tags)
         remove_tags
         add_tags(valid_tags)
       end
@@ -33,6 +33,10 @@ module Taggable
   end
 
   private
+
+  def pick_valid_tags(tags)
+    tags.split.uniq.take(self.class.const_get(:MAXIMUM_TAG_TOTAL))
+  end
 
   def add_tags(valid_tags)
     valid_tags.each do |tag|

@@ -83,6 +83,12 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       title: 'new_artcle', content: 'content', tag_list: tags
       }}
     assert_equal tags.split.uniq.sort!, Article.last.tags.pluck(:name).sort!
+    # 一篇文章最多拥有10个tag
+    tags = (1..11).to_a.join(' ')
+    post  articles_path, params: { article: {
+      title: 'new_artcle', content: 'content', tag_list: tags
+      }}
+    assert_equal 10, Article.last.tags.count
   end
 
   test 'should update article' do

@@ -18,6 +18,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <%= link_to "编辑账户", edit_user_registration_path, class: "dropdown-item" %>
+            <%= link_to "我的博客", user_articles_path(current_user.name), class: "dropdown-item" %>
             <div class="dropdown-divider"></div>
             <%= link_to '登出', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
           </div>

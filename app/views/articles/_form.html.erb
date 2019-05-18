@@ -11,6 +11,7 @@
 
       <div class="field form-group pt-2">
         <%= f.label :tags %>
+        <em>(可选，最多10个不重复的标签，标签之间用空格隔开)</em>
         <%= f.text_field :tag_list, autocomplete: "tags", class: "form-control" %>
       </div>
 

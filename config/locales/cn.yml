@@ -6,13 +6,6 @@ cn:
       too_short: "太短"
       confirmation: "不匹配"
       taken: "已存在"
-  helpers:
-    label:
-      user:
-        name: "用户名"
-        email: "邮箱"
-        password: "密码"
-        password_confirmation: "再次输入密码"
   # copy by https://github.com/svenfuchs/rails-i18n/blob/master/rails/locale/zh-CN.yml
   activerecord:
     errors:
@@ -133,6 +126,16 @@ cn:
       create: 新增%{model}
       submit: 储存%{model}
       update: 更新%{model}
+    label:
+      user:
+        name: "用户名"
+        email: "邮箱"
+        password: "密码"
+        password_confirmation: "再次输入密码"
+      article:
+        title: "标题"
+        tags: "标签"
+        content: "内容"
   number:
     currency:
       format:
