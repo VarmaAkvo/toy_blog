@@ -9,6 +9,11 @@
         <%= error_list(@article, :title) %>
       </div>
 
+      <div class="field form-group pt-2">
+        <%= f.label :tags %>
+        <%= f.text_field :tag_list, autocomplete: "tags", class: "form-control" %>
+      </div>
+
       <div class="field form-group">
         <%= f.label :content %>
         <%= f.rich_text_area :content, autocomplete: "content" %>

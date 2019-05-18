@@ -40,7 +40,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
 
     put user_article_path(@other.name, @other_article), params: {article: {
-      title: 'new_artcle', content: 'content'
+      title: 'new_artcle', content: 'content', tag_list: ''
       }}
     assert_not_equal 'new_artcle', @other_article.reload.title
 
@@ -70,24 +70,43 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create article' do
+    # 没有tag的文章
     assert_difference('Article.count') do
       post articles_path, params: { article: {
-        title: 'new_artcle', content: 'content'
+        title: 'new_artcle', content: 'content', tag_list: ''
         }}
     end
     assert_redirected_to user_article_path(@user.name, Article.last)
+    # 有tag的文章，重复tag会被删除
+    tags = "tag1 tag2 tag3 tag4 tag4"
+    post  articles_path, params: { article: {
+      title: 'new_artcle', content: 'content', tag_list: tags
+      }}
+    assert_equal tags.split.uniq.sort!, Article.last.tags.pluck(:name).sort!
   end
 
   test 'should update article' do
     title, content = 'new_artcle', '中文'
-    assert_not @article.content.body.to_s.include? content
+    original_tags = @article.tags.pluck(:name).sort
     put user_article_path(@user.name, @article), params: { article: {
-      title: title, content: content
+      title: title, content: content, tag_list: ''
       }}
     @article.reload
     assert_equal title,   @article.title
     assert @article.content.body.to_s.include? content
+    assert_equal original_tags, @article.tags.pluck(:name).sort
     assert_redirected_to user_article_path(@user.name, @article)
+  end
+
+  test 'should cover original tags when update tags' do
+    tags = @article.tags.pluck(:name)
+    new_tag = 'new_tag'
+    assert_not tags.include? new_tag
+    put user_article_path(@user.name, @article), params: { article: {
+      title: @article.title, content: @article.content, tag_list: new_tag
+      }}
+    @article.reload
+    assert_equal new_tag, @article.tags.pluck(:name).join
   end
 
   test 'should destroy article' do
