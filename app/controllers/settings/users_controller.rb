@@ -8,12 +8,8 @@ class Settings::UsersController < ApplicationController
 
   def update
     result = false
-    user_params = user_setting_params.select {|k, v| [:profile, :name].include?(k.to_sym)}
+    user_params = user_setting_params.reject {|k, v| k.to_sym == :tag_list}
     @user = current_user
-
-    if user_setting_params[:avatar].present?
-
-    end
     if user_setting_params[:tag_list].present?
       result = !!@user.update_with_tags(user_setting_params[:tag_list], user_params)
     end

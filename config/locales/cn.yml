@@ -134,6 +134,7 @@ cn:
         password_confirmation: "再次输入密码"
         profile: "简介"
         tag_list: "标签"
+        avatar: "头像"
       article:
         title: "标题"
         tag_list: "标签"

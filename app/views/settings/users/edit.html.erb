@@ -3,6 +3,11 @@
   <div class="px-2">
     <%= form_for(@user, url: settings_user_url, html: { method: :put }) do |f| %>
       <div class="field form-group pt-2">
+        <%= f.label :avatar %>
+        <%= f.file_field :avatar, class: "form-control-file" %>
+      </div>
+
+      <div class="field form-group pt-2">
         <%= f.label :name %>
         <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
       </div>

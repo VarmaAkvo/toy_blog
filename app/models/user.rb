@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :articles
   has_many :tagging, class_name: 'Tagging', as: :taggable
   has_many :tags, through: :tagging
+  has_one_attached :avatar
 
   MAXIMUM_TAG_TOTAL = 10
   # Include default devise modules. Others available are:

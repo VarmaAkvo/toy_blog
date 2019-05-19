@@ -9,10 +9,20 @@ module ApplicationHelper
   end
 
   def avatar_of(user, size)
-    #默认头像
+    if user.avatar.attached?
+      metadata = user.avatar.attachment.blob.metadata
+      width, height = metadata[:width], metadata[:height]
+      resize_params = (width > height) ? [size, nil] : [nil, size]
+      content = image_tag(user.avatar.variant(resize_to_fill: resize_params), class: "rounded-circle")
+      add_class = ""
+    else
+      #默认头像
+      text_style = "font-size: #{size/2}px;line_height: #{size/2}px;"
+      content = content_tag(:span, user.name.first.capitalize, class: "text-center text-white", style: text_style)
+      add_class = " rounded-circle bg-info"
+    end
+    klass = "d-flex justify-content-center align-items-center" + add_class
     style = "height: #{size}px;width: #{size}px;"
-    text_style = "font-size: #{size/2}px;line_height: #{size/2}px;"
-    name = content_tag(:span, user.name.first.capitalize, class: "text-center text-white", style: text_style)
-    content_tag(:div, name, class: "rounded-circle bg-info d-flex justify-content-center align-items-center", style: style)
+    content_tag(:div, content, class: klass, style: style)
   end
 end
