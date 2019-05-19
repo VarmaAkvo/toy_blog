@@ -8,18 +8,18 @@ class Settings::UsersController < ApplicationController
 
   def update
     result = false
-    profile_params = { profile: user_setting_params[:profile] }
+    user_params = user_setting_params.select {|k, v| [:profile, :name].include?(k.to_sym)}
     @user = current_user
 
     if user_setting_params[:avatar].present?
 
     end
     if user_setting_params[:tag_list].present?
-      result = !!@user.update_with_tags(user_setting_params[:tag_list], profile_params)
+      result = !!@user.update_with_tags(user_setting_params[:tag_list], user_params)
     end
     # 如果没更新tag就单独更新profile
     if !result
-      result = !!@user.update(profile_params)
+      result = !!@user.update(user_params)
     end
     # 不考虑更新头像失败的情况
     if result
@@ -33,6 +33,6 @@ class Settings::UsersController < ApplicationController
   private
 
   def user_setting_params
-    params.require(:user).permit(:profile, :tag_list, :avatar)
+    params.require(:user).permit(:profile, :name, :tag_list, :avatar)
   end
 end

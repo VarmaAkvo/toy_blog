@@ -4,13 +4,8 @@
   <div class="px-2">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <div class="field form-group pt-2">
-        <%= f.label :name %><br />
-        <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
-      </div>
-
-      <div class="field form-group pt-2">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
       </div>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

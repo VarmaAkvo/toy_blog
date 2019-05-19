@@ -21,4 +21,9 @@ class UserTest < ActiveSupport::TestCase
     @user.name.upcase!
     assert_not @user.valid?
   end
+
+  test 'profile should not longer than 100' do
+    @user.profile = 'a'*101
+    assert_not @user.valid?
+  end
 end

@@ -67,7 +67,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :content, :tag_list).reject {|k, v| k == :tag_list}
+    params.require(:article).permit(:title, :content, :tag_list).reject {|k, v| k.to_sym == :tag_list}
   end
 
   def confirm_authority

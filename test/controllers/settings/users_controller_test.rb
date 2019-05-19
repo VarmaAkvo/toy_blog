@@ -15,11 +15,14 @@ class Settings::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update user setting" do
+    name = 'new_name'
     profile = 'It is a profile'
     assert_not_equal profile, @user.profile
     put settings_user_url, params: {user:{
-      profile: profile
+      profile: profile, name: name
       }}
+    assert_redirected_to edit_settings_user_url
     assert_equal profile, @user.reload.profile
+    assert_equal name, @user.name
   end
 end
