@@ -1,0 +1,21 @@
+<div class="col-6 offset-3">
+  <h2 class="bg-dark p-3 mb-0 text-white rounded-top">个人资料</h2>
+  <div class="px-2">
+    <%= form_for(@user, url: settings_user_url, html: { method: :put }) do |f| %>
+      <div class="field form-group pt-2">
+        <%= f.label :profile %><br />
+        <%= f.text_field :profile, autofocus: true, autocomplete: "profile", class: "form-control" %>
+      </div>
+
+      <div class="field form-group pt-2">
+        <%= f.label :tag_list %>
+        <em>(可选，最多10个不重复的标签，标签之间用空格隔开)</em>
+        <%= f.text_field :tag_list, autocomplete: "tag_list", class: "form-control" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "更新", class: "btn btn-info btn-block" %>
+      </div>
+    <% end %>
+  </div>
+</div>

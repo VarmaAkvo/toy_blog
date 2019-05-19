@@ -132,9 +132,11 @@ cn:
         email: "邮箱"
         password: "密码"
         password_confirmation: "再次输入密码"
+        profile: "简介"
+        tag_list: "标签"
       article:
         title: "标题"
-        tags: "标签"
+        tag_list: "标签"
         content: "内容"
   number:
     currency:
