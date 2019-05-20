@@ -1,6 +1,19 @@
 <div class="row">
   <div class="col-6 offset-2">
-    <%= render @articles %>
+    <% if @articles.empty? %>
+      <div class="card text-center">
+        <div class="card-body">
+          <% if @owner == current_user %>
+            <p>你还没有文章。</p>
+            <%= link_to '新文章', new_article_path, class: "card-link" %>
+          <% else %>
+            <p>该用户还没有文章。</p>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <%= render @articles %>
+    <% end %>
   </div>
-  <%= render 'sidebar' %>  
+  <%= render 'sidebar' %>
 </div>
