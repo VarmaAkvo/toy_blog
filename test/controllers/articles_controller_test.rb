@@ -95,7 +95,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     title, content = 'new_artcle', '中文'
     original_tags = @article.tags.pluck(:name).sort
     put user_article_path(@user.name, @article), params: { article: {
-      title: title, content: content, tag_list: ''
+      title: title, content: content, tag_list: 'tag1 tag2'
       }}
     @article.reload
     assert_equal title,   @article.title

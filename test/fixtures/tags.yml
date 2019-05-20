@@ -1,4 +1,6 @@
 one:
+  id: 1
   name: tag1
 two:
+  id: 2
   name: tag2

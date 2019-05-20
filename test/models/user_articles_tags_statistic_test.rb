@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserArticlesTagsStatisticTest < ActiveSupport::TestCase
   setup do
-    @uats = user_articles_tags_statistics(:one)
+    @uats = user_articles_tags_statistics(:two)
   end
 
   test 'should be true' do

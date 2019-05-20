@@ -7,6 +7,7 @@ class ArticlesController < ApplicationController
   def index
     # 当前with_rich_text_content_and_embeds并不能解决N+1问题， 留着等修复
     @articles = @owner.articles.includes(:tags).with_rich_text_content_and_embeds.order(created_at: :desc)
+    @uats = UserArticlesTagsStatistic.includes(:tag).where(user_id: @owner.id)
   end
 
   def new
@@ -15,6 +16,7 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.with_rich_text_content_and_embeds.find(params[:id])
+    @uats = UserArticlesTagsStatistic.includes(:tag).where(user_id: @owner.id)
     @pre_article = @owner.articles.where("created_at < ?", @article.created_at).order(:created_at).last
     @next_article = @owner.articles.where("created_at > ?", @article.created_at).order(:created_at).first
   end
@@ -25,8 +27,8 @@ class ArticlesController < ApplicationController
 
   def create
     @article = current_user.articles.build(article_params)
-    if @article.save_with_tags(params[:article][:tag_list])
-      #add_tags_to(@article, params[:article][:tag_list]) unless params[:article][:tag_list].empty?
+    if @article.save
+      @article.create_tags(params[:article][:tag_list]) unless params[:article][:tag_list].empty?
       flash[:notice] = "新文章发布成功。"
       redirect_to user_article_url(current_user.name, @article)
     else
@@ -35,8 +37,11 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    if @article.update_with_tags(params[:article][:tag_list], article_params)
-      #update_tags_for(@article, params[:article][:tag_list]) unless params[:article][:tag_list].empty?
+    if @article.update(article_params)
+      # 如果没改tags就不进行更新
+      unless params[:article][:tag_list].split.sort == @article.tags.pluck(:name).sort
+        @article.update_tags(params[:article][:tag_list])
+      end
       flash[:notice] = "文章更新成功。"
       redirect_to user_article_url(current_user.name, @article)
     else
@@ -47,6 +52,7 @@ class ArticlesController < ApplicationController
   def destroy
     flash[:notice] = "该文章已经删除。"
     @article.destroy
+    update_uats
     redirect_to root_url
   end
 
@@ -78,32 +84,11 @@ class ArticlesController < ApplicationController
       redirect_to root_url
     end
   end
-
-  def add_tags_to(taggable, tags)
-    # 去除重复tag
-    valid_tags = tags.split.uniq
-    valid_tags.each do |tag|
-      # 如果是数据库中不存在的tag 则创建它
-      Tag.create(name: tag) unless Tag.exists?(name: tag)
+  # 更新统计信息
+  def update_uats
+    hash = Tagging.where(taggable_id: current_user.article_ids, taggable_type: 'Article').group(:tag_id).count
+    hash.each do |tag_id, total|
+      UserArticlesTagsStatistic.find_or_initialize_by(user_id: current_user.id, tag_id: tag_id).update(total: total)
     end
-    # 创建tagging 关联
-    tag_ids = Tag.where(name: valid_tags).pluck(:id)
-    tag_ids.each do |tag_id|
-      taggable.tagging.create(tag_id: tag_id)
-    end
-  end
-
-  def update_tags_for(taggable, tags)
-    # 去除重复tag
-    valid_tags = tags.split.uniq.join(' ')
-    # 删除所有tagging
-    taggable.tagging.each do |tagging|
-      tagging.destroy
-      # 如果一个tag不再被tagging就删除它
-      if Tagging.exists?( tag_id: tagging.tag_id)
-        Tag.destroy(tagging.tag_id)
-      end
-    end
-    add_tags_to(taggable, valid_tags)
   end
 end

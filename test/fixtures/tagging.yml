@@ -1,9 +1,16 @@
 one:
-  taggable: one (Article)
-  tag: one
+  taggable_type: Article
+  taggable_id: 1
+  tag_id: 1
 two:
-  taggable: one (Article)
-  tag: two
+  taggable_type: Article
+  taggable_id: 1
+  tag_id: 2
 three:
-  taggable: three (User)
-  tag: one
+  taggable_type: User
+  taggable_id: 1
+  tag_id: 1
+four:
+  taggable_type: User
+  taggable_id: 1
+  tag_id: 2

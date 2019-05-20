@@ -3,10 +3,12 @@
 #   name: content
 #   body: <p>In a <i>million</i> stars!</p>
 one:
-  record: one (Article)
+  record_type: Article
+  record_id: 1
   name: content
   body: work?
 two:
-  record: two (Article)
+  record_type: Article
+  record_id: 2
   name: content
-  body: work!  
+  body: work!

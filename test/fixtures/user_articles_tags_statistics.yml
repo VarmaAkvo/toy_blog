@@ -1,4 +1,8 @@
-one:
-  user: three
-  tag: one
+two:
+  user_id: 1
+  tag_id: 2
+  total: 1
+three:
+  user_id: 1
+  tag_id: 1
   total: 1
