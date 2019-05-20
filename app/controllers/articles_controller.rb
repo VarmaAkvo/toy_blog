@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
 
   def index
     # 当前with_rich_text_content_and_embeds并不能解决N+1问题， 留着等修复
-    @articles = @owner.articles.with_rich_text_content_and_embeds.order(created_at: :desc)
+    @articles = @owner.articles.includes(:tags).with_rich_text_content_and_embeds.order(created_at: :desc)
   end
 
   def new
