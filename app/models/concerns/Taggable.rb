@@ -44,7 +44,7 @@ module Taggable
   def remove_tags(discard_tags_array)
     self.tagging.where(tag_id: discard_tags_array).each {|tagging| tagging.destroy}
     discard_tags_array.each do |tag_id|
-      Tag.destroy(tag_id) if Tagging.exists?(tag_id: tag_id)
+      Tag.destroy(tag_id) unless Tagging.exists?(tag_id: tag_id)
     end
     # 如果self是article，则更新 UserArticleTagsStatistic 的信息
     if self.is_a? Article

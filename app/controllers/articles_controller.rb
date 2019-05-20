@@ -51,9 +51,9 @@ class ArticlesController < ApplicationController
 
   def destroy
     flash[:notice] = "该文章已经删除。"
+    @article.delete_tags
     @article.destroy
-    update_uats
-    redirect_to root_url
+    redirect_to  user_articles_path(current_user.name)
   end
 
   private
@@ -82,13 +82,6 @@ class ArticlesController < ApplicationController
     if params[:name].downcase != current_user.name
       flash[:alert] = '你没有权限进行该操作'
       redirect_to root_url
-    end
-  end
-  # 更新统计信息
-  def update_uats
-    hash = Tagging.where(taggable_id: current_user.article_ids, taggable_type: 'Article').group(:tag_id).count
-    hash.each do |tag_id, total|
-      UserArticlesTagsStatistic.find_or_initialize_by(user_id: current_user.id, tag_id: tag_id).update(total: total)
     end
   end
 end

@@ -119,6 +119,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Article.count', -1) do
       delete user_article_path(@user.name, @article)
     end
-    assert_redirected_to root_url
+    assert_redirected_to user_articles_path(@user.name)
+    assert_equal 0, @article.tagging.count
+    assert UserArticlesTagsStatistic.find_by(user_id: @article.user_id).nil?
   end
 end
