@@ -1,14 +1,17 @@
-<div class="border-top d-flex py-2">
+<div class="border-top d-flex py-2" data-controller="reply">
   <%= avatar_of(comment.user, 64) %>
-  <div class="d-flex flex-column pl-2">
+  <div class="d-flex flex-column pl-2 w-100">
     <div class="">
       <%= comment.floor %>.<%= link_to comment.user.name, user_articles_path(comment.user.name), class: 'card-link p-2' %>
     </div>
     <div class=" ">
       <%= comment.content %>
     </div>
-    <div class="small text-secondary">
+    <div class="small text-secondary d-flex justify-content-between">
       <%= comment.created_at.strftime('%Y年%m月%d日 %H:%M') %>
+      <%= button_tag '回复', class: 'btn btn-sm btn-primary py-0 float-right', data: {action: "reply#changeVisibility"} %>
     </div>
+    <%= render comment.replies %>
+    <%= render 'replies/form', comment: comment %>
   </div>
 </div>

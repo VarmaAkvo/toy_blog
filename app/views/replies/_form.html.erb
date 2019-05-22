@@ -1,0 +1,20 @@
+<div class="mt-2 d-none" data-target="reply.form">
+  <% if user_signed_in? %>
+    <%= form_for([comment, @reply], html: {class: "mb-2"}) do |f| %>
+      <div class="d-flex">
+        <div class="mr-2"><%= avatar_of(current_user, 64) %></div>
+
+        <div class="field form-group w-100">
+          <%= f.text_area :content, autocomplete: "content", class: "form-control" %>
+          <%= error_list(@reply, :content) %>
+        </div>
+      </div>
+
+      <div class="actions d-flex flex-row-reverse">
+        <%= f.submit '回复', class: "btn btn-sm btn-info px-4 py-0" %>
+      </div>
+    <% end %>
+  <% else %>
+    <h4>回复需要<%= link_to '登录', new_user_session_path, class: "card-link" %></h4>
+  <% end %>
+</div>

@@ -1,0 +1,14 @@
+<div class="border-left my-1">
+  <div class="d-flex flex-column pl-2">
+    <div class="d-flex align-items-center py-2">
+      <%= avatar_of(reply.user, 64) %>
+      <%= link_to reply.user.name, user_articles_path(reply.comment.user.name), class: 'card-link p-2' %>
+    </div>
+    <div class=" ">
+      <%= reply.content %>
+    </div>
+    <div class="small text-secondary d-flex">
+      <%= reply.created_at.strftime('%Y年%m月%d日 %H:%M') %>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post '/comments/:comment_id/replies',  to: 'replies#create',  as: 'comment_replies'
   post '/articles/:article_id/comments', to: 'comments#create', as: 'article_comments'
 
   namespace :settings do
