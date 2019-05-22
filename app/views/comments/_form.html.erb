@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+  <%= form_for([@article, @comment], html: {class: "mb-2"}) do |f| %>
+    <div class="d-flex align-items-center my-2">
+      <%= avatar_of(current_user, 64) %>
+      <%= link_to current_user.name, user_articles_path(current_user), class: 'card-link p-2'%>
+    </div>
+    <div class="field form-group">
+      <%= f.text_area :content, autocomplete: "content", class: "form-control" %>
+      <%= error_list(@article, :content) %>
+    </div>
+
+    <div class="actions d-flex flex-row-reverse">
+      <%= f.submit '评论', class: "btn btn-info px-4" %>
+    </div>
+  <% end %>
+<% else %>
+  <h4>评论需要<%= link_to '登录', new_user_session_path, class: "card-link" %></h4>
+<% end %>

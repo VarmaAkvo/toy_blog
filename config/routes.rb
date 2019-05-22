@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post '/articles/:article_id/comments', to: 'comments#create', as: 'article_comments'
+
   namespace :settings do
     resource :user, only: [:edit, :update]
     resource :blog, only: [:edit, :update]

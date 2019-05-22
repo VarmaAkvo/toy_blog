@@ -9,6 +9,12 @@
         <%= link_to('后一篇文章 >', user_article_path(@owner.name, @next_article), class: 'btn btn-outline-info', role: 'button') if @next_article %>
       </div>
     </div>
+    <div class="card">
+      <div class="card-body">
+        <%= render 'comments/form' %>
+        <%= render @comments %>
+      </div>
+    </div>
   </div>
   <%= render 'sidebar' %>
 </div>

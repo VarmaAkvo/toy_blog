@@ -1,0 +1,14 @@
+<div class="border-top d-flex py-2">
+  <%= avatar_of(comment.user, 64) %>
+  <div class="d-flex flex-column pl-2">
+    <div class="">
+      <%= comment.floor %>.<%= link_to comment.user.name, user_articles_path(comment.user.name), class: 'card-link p-2' %>
+    </div>
+    <div class=" ">
+      <%= comment.content %>
+    </div>
+    <div class="small text-secondary">
+      <%= comment.created_at.strftime('%Y年%m月%d日 %H:%M') %>
+    </div>
+  </div>
+</div>
