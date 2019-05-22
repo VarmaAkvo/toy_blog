@@ -20,7 +20,8 @@ class ArticlesController < ApplicationController
     @pre_article = @owner.articles.where("created_at < ?", @article.created_at).order(:created_at).last
     @next_article = @owner.articles.where("created_at > ?", @article.created_at).order(:created_at).first
     @comment = Comment.new
-    @comments = @article.comments.includes(user: :avatar_attachment).order(created_at: :desc)
+    @comments = @article.comments.includes(user: :avatar_attachment, replies: {user: :avatar_attachment}).order(created_at: :desc)
+    @reply = Reply.new
   end
 
   def edit
