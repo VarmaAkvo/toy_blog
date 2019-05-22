@@ -20,9 +20,9 @@ module ArticlesHelper
     uats.map do |u|
       [u.tag.name, u.total]
     end.map do |tag, total|
-      link_to "##{tag}(#{total})", '#', class: 'small px-2'
+      link_to "##{tag}(#{total})", '#', class: 'small text-break d-inline-block mx-2'
     end.join.html_safe.yield_self do |tags|
-      content_tag(:div, tags, class: "text-break")
+      content_tag(:div, tags, class: "text-wrap")
     end
   end
 end

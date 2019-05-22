@@ -14,5 +14,7 @@
     </div>
   <% end %>
 <% else %>
-  <h4>评论需要<%= link_to '登录', new_user_session_path, class: "card-link" %></h4>
+  <div class="alert alert-danger">
+    <h4 class="mb-0">评论需要<%= link_to '登录', new_user_session_path, class: "card-link" %></h4>
+  </div>
 <% end %>
