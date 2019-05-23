@@ -16,6 +16,7 @@
       <div class="card-body">
         <%= render 'comments/form' %>
         <%= render @comments %>
+        <%= will_paginate @comments, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
       </div>
     </div>
   </div>

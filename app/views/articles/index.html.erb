@@ -13,6 +13,7 @@
       </div>
     <% else %>
       <%= render @articles %>
+      <%= will_paginate @articles, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
     <% end %>
   </div>
   <%= render 'sidebar' %>

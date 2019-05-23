@@ -6,7 +6,9 @@ class ArticlesController < ApplicationController
 
   def index
     # 当前with_rich_text_content_and_embeds并不能解决N+1问题， 留着等修复
-    @articles = @owner.articles.includes(:tags).with_rich_text_content_and_embeds.order(created_at: :desc)
+    @articles = @owner.articles.includes(:tags)
+                      .with_rich_text_content_and_embeds.order(created_at: :desc)
+                      .page(params[:page]).per_page(5)
     @uats = UserArticlesTagsStatistic.includes(:tag).where(user_id: @owner.id)
   end
 
@@ -20,7 +22,9 @@ class ArticlesController < ApplicationController
     @pre_article = @owner.articles.where("created_at < ?", @article.created_at).order(:created_at).last
     @next_article = @owner.articles.where("created_at > ?", @article.created_at).order(:created_at).first
     @comment = Comment.new
-    @comments = @article.comments.includes(user: :avatar_attachment, replies: {user: :avatar_attachment}).order(created_at: :desc)
+    @comments = @article.comments
+                        .includes(user: :avatar_attachment, replies: {user: :avatar_attachment})
+                        .order(created_at: :desc).page(params[:page]).per_page(5)
     @reply = Reply.new
   end
 
