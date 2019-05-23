@@ -11,7 +11,13 @@
       <%= comment.created_at.strftime('%Y年%m月%d日 %H:%M') %>
       <%= button_tag '回复', class: 'btn btn-sm btn-primary py-0 float-right', data: {action: "reply#changeVisibility"} %>
     </div>
-    <%= render comment.replies %>
+    <div data-controller="read-replies" data-read-replies-index="0">
+      <%= render comment.replies %>
+      <div class="d-flex justify-content-between mt-2">
+        <%= button_tag '查看更多', class: 'btn btn-sm btn-primary py-0', data: {action: "read-replies#showExtraReplies", target: 'read-replies.show'} %>
+        <%= button_tag '收回', class: 'btn btn-sm btn-primary py-0 d-none', data: {action: "read-replies#hiddenExtraReplies", target: 'read-replies.hidden'} %>
+      </div>
+    </div>
     <%= render 'replies/form', comment: comment %>
   </div>
 </div>
