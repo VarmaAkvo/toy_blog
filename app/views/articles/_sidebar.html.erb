@@ -5,9 +5,9 @@
       <h5 class="card-title mb-1"><%= @owner.name %></h5>
       <div class="mb-2">
         <% if current_user && current_user.following?(@owner) %>
-          <%= link_to '取消关注', '#', method: :delete, class: 'btn btn-danger btn-sm py-0' %>
+          <%= link_to '取消关注', user_following_path(@owner), method: :delete, class: 'btn btn-danger btn-sm py-0' %>
         <% else %>
-          <%= link_to '关注', '#', method: :post, class: 'btn btn-primary btn-sm py-0' %>
+          <%= link_to '关注', user_following_path(@owner), method: :post, class: 'btn btn-primary btn-sm py-0' unless current_user == @owner %>
         <% end %>
       </div>
       <div class="card-text small"><%= @owner.profile %></div>

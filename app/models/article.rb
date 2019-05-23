@@ -3,9 +3,9 @@ class Article < ApplicationRecord
 
   belongs_to :user
   has_rich_text :content
-  has_many :tagging, class_name: 'Tagging', as: :taggable
+  has_many :tagging, class_name: 'Tagging', as: :taggable, dependent: :destroy
   has_many :tags, through: :tagging
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   MAXIMUM_TITLE_LENGTH = 150
   MAXIMUM_CONTENT_LENGTH = 5001

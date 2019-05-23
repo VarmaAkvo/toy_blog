@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get    '/following',                to: 'relations#index',   as: 'following'
+  post   '/users/:user_id/following', to: 'relations#create'
+  delete '/users/:user_id/following', to: 'relations#destroy',  as: 'user_following'
+
   post '/comments/:comment_id/replies',  to: 'replies#create',  as: 'comment_replies'
   post '/articles/:article_id/comments', to: 'comments#create', as: 'article_comments'
 

@@ -13,18 +13,17 @@ Faker::Lorem.words(20).each do |tag|
   Tag.create(name: tag)
 end
 tag_ids = (1..20).to_a
-puts 1
+
 9.times do
-  name = Faker::Name.unique.name.gsub(/\s+/, '_')
-  email = Faker::Internet.unique.email
-  #avatar = Faker::Avatar.image
+  name = Faker::Name.unique.name.gsub(/\s+/, '_').downcase
+  email = name.downcase + '@example.com'
   user = User.create(name: name, email: email, password: '123456', password_confirmation: '123456')
 
   tags = Tag.where(id: tag_ids.shuffle.take(3)).pluck(:name).join(' ')
   user.create_tags(tags)
 end
 user_ids = (1..10).to_a
-puts 2
+
 10.times do
   title = Faker::Lorem.sentence(3, true, 4)
   content = Faker::Lorem.paragraphs
@@ -33,7 +32,7 @@ puts 2
   tags = Tag.where(id: tag_ids.shuffle.take(3)).pluck(:name).join(' ')
   article.create_tags(tags)
 end
-puts 3
+
 floor = 0
 User.where(id: user_ids.shuffle.take(6)).each do |user|
   floor += 1
@@ -42,10 +41,15 @@ User.where(id: user_ids.shuffle.take(6)).each do |user|
     article.comments.create(user_id: user.id, content: content, floor: floor)
   end
 end
-puts 4
+
 User.where(id: user_ids.shuffle.take(6)).each do |user|
   Comment.all.each do |comment|
     content = Faker::Lorem.sentence
     comment.replies.create(user_id: user.id, content: content)
   end
+end
+
+User.where.not(id: 1).each do |user|
+  varma.follow user
+  user.follow varma
 end

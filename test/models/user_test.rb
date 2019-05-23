@@ -53,4 +53,13 @@ class UserTest < ActiveSupport::TestCase
     @user.destroy
     assert_equal 0, @user.tagging.count
   end
+
+  test 'should follow and then unfollow a user' do
+    @other = users(:two)
+    assert_not @user.following? @other
+    @user.follow @other
+    assert @user.following? @other
+    @user.unfollow @other
+    assert_not @user.following? @other
+  end
 end
