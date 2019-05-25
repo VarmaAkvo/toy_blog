@@ -1,0 +1,8 @@
+<div class="card mb-2">
+  <div class="card-body">
+    <span><%= link_to activity.user.name, user_articles_path(activity.user.name) %>于
+      <span class="text-secondary small"><%= activity.created_at.strftime('%Y年%m月%d日 %H:%M') %></span>
+      发表了新文章 <%= link_to activity.title, user_article_path(activity.user.name, activity)%>
+    </span>
+  </div>
+</div>

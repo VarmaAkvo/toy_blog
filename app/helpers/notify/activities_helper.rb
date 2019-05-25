@@ -1,0 +1,2 @@
+module Notify::ActivitiesHelper
+end

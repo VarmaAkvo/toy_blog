@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :notify do
+    get 'activities', to: 'activities#index'
+    get 'replies',    to: 'replies#index'
+  end
   get    '/following',                to: 'relations#index',   as: 'following'
   post   '/users/:user_id/following', to: 'relations#create'
   delete '/users/:user_id/following', to: 'relations#destroy',  as: 'user_following'

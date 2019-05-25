@@ -1,0 +1,13 @@
+<div class="card mb-2">
+  <div class="card-body">
+    <div>
+      <p>
+        <%= link_to reply.user.name, user_articles_path(reply.user.name) %> 于
+        <span class="text-secondary small"><%= reply.created_at.strftime('%Y年%m月%d日 %H:%M') %></span>
+      </p>
+      <p>在 <%= link_to reply.comment.article.title, user_article_path(reply.comment.article.user.name, reply.comment.article) %> 中回复了你：</p>
+      <p><%= reply.content %></p>
+      <p class="bg-light text-secondary p-2"><%= reply.comment.content %></p>
+    </div>
+  </div>
+</div>
