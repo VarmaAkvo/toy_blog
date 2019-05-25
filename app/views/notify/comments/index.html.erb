@@ -1,0 +1,7 @@
+<div class="row">
+  <%= render 'notify/shared/side_nav' %>
+  <div class="col-6">
+    <%= render partial: "article", collection: @articles %>
+    <%= will_paginate @articles, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
+  </div>
+</div>

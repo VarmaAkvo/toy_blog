@@ -1,0 +1,8 @@
+<div class="card mb-2">
+  <div class="card-body">
+    <span>你的 <%= link_to article.title, user_article_path(article.user.name, article)%> 最后于
+      <span class="text-secondary small"><%= article.updated_at.strftime('%Y年%m月%d日 %H:%M') %></span>
+      被评论。
+    </span>
+  </div>
+</div>

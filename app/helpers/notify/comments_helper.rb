@@ -1,0 +1,2 @@
+module Notify::CommentsHelper
+end

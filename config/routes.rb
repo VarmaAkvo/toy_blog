@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :notify do
     get 'activities', to: 'activities#index'
+    get 'comments',    to: 'comments#index'
     get 'replies',    to: 'replies#index'
   end
   get    '/following',                to: 'relations#index',   as: 'following'
