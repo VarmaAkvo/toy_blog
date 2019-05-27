@@ -11,7 +11,7 @@
     </form>
     <ul class="navbar-nav ml-auto">
       <% if user_signed_in? %>
-        <li class="nav-item"><%= link_to '通知', notify_activities_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= notify_link %></li>
         <li class="nav-item"><%= link_to '新文章', new_article_path, class: "nav-link" %></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

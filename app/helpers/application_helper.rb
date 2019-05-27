@@ -25,4 +25,12 @@ module ApplicationHelper
     style = "height: #{size}px;width: #{size}px;"
     content_tag(:div, content, class: klass, style: style)
   end
+
+  def notify_link
+    if @has_new_notify
+      link_to('你有新通知', notify_activities_path, class: "nav-link text-danger")
+    else
+      link_to('通知', notify_activities_path, class: "nav-link")
+    end
+  end
 end

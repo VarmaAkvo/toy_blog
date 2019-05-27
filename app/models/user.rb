@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :tagging, class_name: 'Tagging', as: :taggable, dependent: :destroy
   has_many :tags, through: :tagging
   has_one  :user_articles_tags_statistic, dependent: :destroy
+  has_one  :notify_visit_time, dependent: :destroy
 
   has_many :active_relations, class_name: 'Relation', foreign_key: :follower_id, dependent: :destroy
   has_many :following, class_name: 'User', through: :active_relations, source: :followed

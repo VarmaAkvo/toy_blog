@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get 'comments',    to: 'comments#index'
     get 'replies',    to: 'replies#index'
   end
+
   get    '/following',                to: 'relations#index',   as: 'following'
   post   '/users/:user_id/following', to: 'relations#create'
   delete '/users/:user_id/following', to: 'relations#destroy',  as: 'user_following'
