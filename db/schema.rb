@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_27_110640) do
+ActiveRecord::Schema.define(version: 2019_05_28_051604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 2019_05_27_110640) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "activity_notify_visits", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_activity_notify_visits_on_user_id"
+  end
+
   create_table "articles", force: :cascade do |t|
     t.string "title", null: false
     t.bigint "user_id", null: false
@@ -53,6 +60,13 @@ ActiveRecord::Schema.define(version: 2019_05_27_110640) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["title"], name: "index_articles_on_title"
     t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "comment_notify_visits", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_comment_notify_visits_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -63,13 +77,6 @@ ActiveRecord::Schema.define(version: 2019_05_27_110640) do
     t.integer "floor", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "notify_visit_times", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_notify_visit_times_on_user_id"
   end
 
   create_table "relations", force: :cascade do |t|
@@ -88,6 +95,13 @@ ActiveRecord::Schema.define(version: 2019_05_27_110640) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["comment_id"], name: "index_replies_on_comment_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
+  end
+
+  create_table "reply_notify_visits", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_reply_notify_visits_on_user_id"
   end
 
   create_table "tagging", force: :cascade do |t|
@@ -130,9 +144,11 @@ ActiveRecord::Schema.define(version: 2019_05_27_110640) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "activity_notify_visits", "users"
+  add_foreign_key "comment_notify_visits", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
-  add_foreign_key "notify_visit_times", "users"
   add_foreign_key "replies", "comments"
   add_foreign_key "replies", "users"
+  add_foreign_key "reply_notify_visits", "users"
 end

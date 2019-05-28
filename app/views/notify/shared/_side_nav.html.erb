@@ -1,8 +1,14 @@
 <div class="col-2 offset-2">
   <div class="list-group">
-    <%= link_to '动态', notify_activities_path, class: "list-group-item list-group-item-action" %>
-    <%= link_to '评论', notify_comments_path, class: "list-group-item list-group-item-action" %>
-    <%= link_to '回复', notify_replies_path, class: "list-group-item list-group-item-action" %>
-    <%= link_to '@我', '#', class: "list-group-item list-group-item-action" %>
+    <%= link_to notify_activities_path, class: 'list-group-item list-group-item-action d-flex justify-content-between' do %>
+      <span>动态</span><span class="badge badge-primary badge-pill"><%= @activities_count %></span>
+    <% end %>
+    <%= link_to notify_comments_path, class: "list-group-item list-group-item-action d-flex justify-content-between" do %>
+       <span>评论</span><span class="badge badge-primary badge-pill"><%= @comments_count %></span>
+    <% end %>
+    <%= link_to notify_replies_path, class: "list-group-item list-group-item-action  d-flex justify-content-between" do %>
+      <span>回复</span><span class="badge badge-primary badge-pill"><%= @replies_count %></span>
+    <% end %>
+    <%#= link_to '@我', '#', class: "list-group-item list-group-item-action" %>
   </div>
 </div>

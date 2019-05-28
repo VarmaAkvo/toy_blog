@@ -1,7 +1,11 @@
 <div class="row">
   <%= render 'notify/shared/side_nav' %>
-  <div class="col-6">
-    <%= render partial: "reply", collection: @replies %>
-    <%= will_paginate @replies, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
-  </div>
+  <% if @replies.any? %>
+    <div class="col-6">
+      <%= render partial: "reply", collection: @replies %>
+      <%= will_paginate @replies, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
+    </div>
+  <% else %>
+    <%= render 'notify/shared/no_notify' %>
+  <% end %>
 </div>
