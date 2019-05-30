@@ -3,6 +3,12 @@ class RepliesController < ApplicationController
 
   def create
     @comment = Comment.find(params[:comment_id])
+    # 被封禁的用户无法回复
+    if current_user.punished?(@comment.article.user)
+      punishment = @comment.article.user.blog_punishments.find_by(punished_id: current_user.id)
+      flash[:alert] = "你在#{punishment.expire_time.strftime('%Y年%m月%d日 %H:%M')}之前无法在此进行回复。"
+      redirect_to user_article_path(@comment.article.user.name, @comment.article_id) and return
+    end
     @reply = @comment.replies.build(user_id: current_user.id, content: params[:reply][:content])
     if @reply.save
       flash[:notice] = '回复成功。'

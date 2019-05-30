@@ -10,6 +10,14 @@ class RepliesControllerTest < ActionDispatch::IntegrationTest
         }}
     end
     assert_redirected_to user_article_path(users(:one).name, @comment.article_id)
+    # 被封禁的用户无法回复
+    sign_out users(:one)
+    sign_in users(:punished)
+    assert_no_difference('Reply.count') do
+      post comment_replies_path(@comment), params: {reply: {
+        content: 'reply'
+        }}
+    end
   end
 
   test "should destroy only user is article's owner" do

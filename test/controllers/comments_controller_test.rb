@@ -11,6 +11,14 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         }}
     end
     assert_redirected_to user_article_path(@user.name, @article.id)
+    # 被封禁的用户无法发评论
+    sign_out @user
+    sign_in users(:punished)
+    assert_no_difference('Comment.count') do
+      post article_comments_path(@article), params: {comment: {
+        content: 'comment'
+        }}
+    end
   end
 
   test "should destroy only user is article's owner" do

@@ -2,6 +2,12 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   def create
     @article = Article.find(params[:article_id])
+    # 被封禁的用户无法发评论
+    if current_user.punished?(@article.user)
+      punishment = @article.user.blog_punishments.find_by(punished_id: current_user.id)
+      flash[:alert] = "你在#{punishment.expire_time.strftime('%Y年%m月%d日 %H:%M')}之前无法在此进行评论。"
+      redirect_to user_article_path(@article.user.name, @article.id) and return
+    end
     @comment = @article.comments.build(user_id: current_user.id, content: params[:comment][:content])
     floor = (@article.comments.maximum(:floor) || 0) + 1
     @comment.floor = floor

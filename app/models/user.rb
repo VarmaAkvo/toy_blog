@@ -18,6 +18,9 @@ class User < ApplicationRecord
   has_many :passive_relations, class_name: 'Relation', foreign_key: :followed_id, dependent: :destroy
   has_many :followers, class_name: 'User', through: :passive_relations
 
+  has_many :blog_punishments, foreign_key: :punisher_id, dependent: :destroy
+  has_many :punishing, class_name: 'User', through: :blog_punishments, source: :punished
+
   has_one_attached :avatar
   after_destroy :delete_tags
 
@@ -39,6 +42,10 @@ class User < ApplicationRecord
 
   def following?(user)
     following.exists?(user.id)
+  end
+
+  def punished?(user)
+    user.punishing.exists?(self.id)
   end
 
   attr_accessor :tag_list

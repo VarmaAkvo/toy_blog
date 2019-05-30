@@ -1,0 +1,2 @@
+module BlogPunishmentsHelper
+end
