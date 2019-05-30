@@ -13,4 +13,17 @@ class CommentsController < ApplicationController
       redirect_to user_article_path(@article.user.name, @article.id)
     end
   end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    @article = @comment.article
+    if current_user.id == @article.user_id
+      @comment.destroy
+      flash[:notice] = '已成功删除该评论'
+      redirect_to user_article_path(@article.user.name, @article.id)
+    else
+      flash[:alert] = '你没有足够权限'
+      redirect_to user_article_path(@article.user.name, @article.id)
+    end
+  end
 end

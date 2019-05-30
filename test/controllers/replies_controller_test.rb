@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RepliesControllerTest < ActionDispatch::IntegrationTest
   test 'should create reply' do
-    @comment = Comment.create(user_id: users(:one).id, article_id: articles(:one).id, content: 'comment', floor: 1)
+    @comment = comments(:one)
     sign_in users(:one)
     assert_difference('Reply.count') do
       post comment_replies_path(@comment), params: {reply: {
@@ -10,5 +10,27 @@ class RepliesControllerTest < ActionDispatch::IntegrationTest
         }}
     end
     assert_redirected_to user_article_path(users(:one).name, @comment.article_id)
+  end
+
+  test "should destroy only user is article's owner" do
+    @reply = replies(:one)
+    @article = @reply.comment.article
+    @user = users(:two)
+    @owner = @article.user
+    assert_not_equal @user, @owner
+
+    sign_in @user
+    assert_no_difference('Reply.count') do
+      delete reply_path(@reply)
+    end
+    assert_redirected_to user_article_path(@owner.name, @article.id)
+
+    sign_out @user
+    sign_in @owner
+
+    assert_difference('Reply.count', -1) do
+      delete reply_path(@reply)
+    end
+    assert_redirected_to user_article_path(@owner.name, @article.id)
   end
 end

@@ -24,5 +24,5 @@ module ArticlesHelper
     end.join.html_safe.yield_self do |tags|
       content_tag(:div, tags, class: "text-wrap")
     end
-  end
+  end  
 end

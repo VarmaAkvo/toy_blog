@@ -1,13 +1,20 @@
-<div class="border-left my-1" data-target="read-replies.reply">
+<div class="border-left my-1 w-100" data-target="read-replies.reply">
   <div class="d-flex flex-column pl-2">
-    <div class="d-flex align-items-center py-2">
-      <%= avatar_of(reply.user, 64) %>
-      <%= link_to reply.user.name, user_articles_path(reply.comment.user.name), class: 'card-link p-2' %>
+    <div class="d-flex justify-content-between py-2">
+      <div class="d-flex align-items-center">
+        <%= avatar_of(reply.user, 64) %>
+        <%= link_to reply.user.name, user_articles_path(reply.comment.user.name), class: 'card-link p-2' %>
+      </div>
+      <% if @owner == current_user %>
+        <%= link_to '删除', reply_path(reply), method: :delete, data: {confirm: '你确定要删除它？'}, class: 'card-link text-danger small' %>
+      <% else %>
+        <%= link_to('举报', '#', class: 'card-link text-danger small') %>
+      <% end %>
     </div>
     <div class=" ">
       <%= reply.content %>
     </div>
-    <div class="small text-secondary d-flex">
+    <div class="small text-secondary d-flex mt-2">
       <%= reply.created_at.strftime('%Y年%m月%d日 %H:%M') %>
     </div>
   </div>

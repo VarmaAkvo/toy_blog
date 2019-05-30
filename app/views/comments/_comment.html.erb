@@ -3,11 +3,16 @@
   <div class="d-flex flex-column pl-2 w-100">
     <div class="">
       <%= comment.floor %>.<%= link_to comment.user.name, user_articles_path(comment.user.name), class: 'card-link p-2' %>
+      <% if @owner == current_user %>
+        <%= link_to '删除', comment_path(comment), method: :delete, data: {confirm: '你确定要删除它？'}, class: 'card-link float-right text-danger small' %>
+      <% else %>
+        <%= link_to('举报', '#', class: 'card-link float-right text-danger small') %>
+      <% end %>
     </div>
     <div class=" ">
       <%= comment.content %>
     </div>
-    <div class="small text-secondary d-flex justify-content-between">
+    <div class="small text-secondary d-flex justify-content-between mt-2">
       <%= comment.created_at.strftime('%Y年%m月%d日 %H:%M') %>
       <%= button_tag '回复', class: 'btn btn-sm btn-primary py-0 float-right', data: {action: "reply#changeVisibility"} %>
     </div>

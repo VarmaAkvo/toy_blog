@@ -11,4 +11,17 @@ class RepliesController < ApplicationController
     end
     redirect_to user_article_path(@comment.article.user.name, @comment.article_id)
   end
+
+  def destroy
+    @reply = Reply.find(params[:id])
+    @article = @reply.comment.article
+    if current_user.id == @article.user_id
+      @reply.destroy
+      flash[:notice] = '已成功删除该回复'
+      redirect_to user_article_path(@article.user.name, @article.id)
+    else
+      flash[:alert] = '你没有足够权限'
+      redirect_to user_article_path(@article.user.name, @article.id)
+    end
+  end
 end

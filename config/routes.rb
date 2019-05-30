@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   delete '/users/:user_id/following', to: 'relations#destroy',  as: 'user_following'
 
   post '/comments/:comment_id/replies',  to: 'replies#create',  as: 'comment_replies'
+  delete '/replies/:id', to: 'replies#destroy', as: 'reply'
   post '/articles/:article_id/comments', to: 'comments#create', as: 'article_comments'
+  delete '/comments/:id', to: 'comments#destroy', as: 'comment'
 
   namespace :settings do
     resource :user, only: [:edit, :update]
