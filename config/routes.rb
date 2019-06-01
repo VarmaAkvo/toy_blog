@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :search do
+    get 'users/tags/:tag',    to: 'user_tags#index',    as: 'user_tags'
+    get 'articles/tags/:tag', to: 'article_tags#index', as: 'article_tags'
+  end
+
   namespace :notify do
     get 'activities', to: 'activities#index'
     get 'comments',    to: 'comments#index'

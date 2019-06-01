@@ -7,7 +7,7 @@
         <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
         <small><%= @ranking_users_hash[user.id] %>名关注者</small>
         <div class="card-text small"><%= user.profile %></div>
-        <%= tag_list(user.tags) %>
+        <%= user_tag_list(user.tags) %>
       </div>
     <% end %>
   </div>
@@ -23,7 +23,7 @@
             <%= link_to article.title, user_article_path(article.user.name,article), class: 'card-link' %>
           </h5>
           <div class="card-text small text-secondary"><%= article.created_at.strftime('%Y年%m月%d日 %H:%M') %></div>
-          <%= tag_list(article.tags) %>
+          <%= article_tag_list(article.tags) %>
         </div>
       <% end %>
     </div>
@@ -39,7 +39,7 @@
           <%= link_to article.title, user_article_path(article.user.name,article), class: 'card-link' %>
         </h5>
         <div class="card-text small text-secondary"><%= article.created_at.strftime('%Y年%m月%d日 %H:%M') %></div>
-        <%= tag_list(article.tags) %>
+        <%= article_tag_list(article.tags) %>
       </div>
     <% end %>
   </div>

@@ -6,13 +6,23 @@ module ArticlesHelper
     return false
   end
 
-  def tag_list(tags)
+  def tag_list(tags, record_type)
     return nil if tags.empty?
+
+    path = "search_#{record_type}_tags_path"
     tags.map(&:name).map do |tag|
-      link_to '#' + tag, '#', class: 'small px-2'
+      link_to '#' + tag, eval(path + "('#{tag}')"), class: 'small px-2'
     end.join.html_safe.yield_self do |tags|
       content_tag(:div, tags, class: "text-break")
     end
+  end
+
+  def user_tag_list(tags)
+    tag_list(tags, 'user')
+  end
+
+  def article_tag_list(tags)
+    tag_list(tags, 'article')
   end
 
   def tag_list_with_count(uats)

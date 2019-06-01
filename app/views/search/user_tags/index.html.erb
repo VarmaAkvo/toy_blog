@@ -1,0 +1,23 @@
+<div class="container">
+  <% if @users.length > 0 %>
+    <h4 class="rounded-top border-dark row px-4 py-3 mb-0 bg-dark text-white ">
+      拥有<%= params[:tag] %> Tag的用户
+    </h4>
+    <div class="row">
+      <% @users.each do |user| %>
+        <div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
+          <%= avatar_of(user, 96) %>
+          <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
+          <small><%= @users_follower_count[user.id] %>名关注者</small>
+          <div class="card-text small"><%= user.profile %></div>
+          <%= user_tag_list(user.tags) %>
+        </div>
+      <% end %>
+    </div>
+    <%= will_paginate @users, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
+  <% else %>
+    <div class="border p-3">
+      不存在拥有<%= params[:tag] %> Tag的用户
+    </div>
+  <% end %>
+</div>
