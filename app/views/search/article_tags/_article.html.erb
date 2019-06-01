@@ -1,0 +1,15 @@
+<div class="card mb-2">
+  <div class="card-body">
+    <div class="d-flex justify-content-between pb-2 border-bottom">
+      <h3 class="card-title "><%= article.title %></h3>
+      <%= avatar_of(article.user, 36)%>
+    </div>
+    <div class="d-flex justify-content-between pb-2">
+      <small class="text-secondary align-bottom">作者: <%= article.user.name %></small>
+      <small class="text-secondary align-bottom"><%= article.created_at.strftime('%Y年%m月%d日 %H:%M') %></small>
+    </div>
+    <%= article.content %>
+    <%= article_tag_list(article.tags) %>
+    <%= link_to '评论', user_article_path(article.user.name, article), class: 'd-block text-right text-decoration-none' %>
+  </div>
+</div>
