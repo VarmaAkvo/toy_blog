@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   namespace :search do
     get 'users/tags/:tag',    to: 'user_tags#index',    as: 'user_tags'
     get 'articles/tags/:tag', to: 'article_tags#index', as: 'article_tags'
+    get 'articles',    to: 'articles#index',     as: 'articles'
+    get 'users',       to: 'users#index',        as: 'users'
   end
 
   namespace :notify do
