@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   scope path: '/blogs/:name', as: 'user' do
     resources :articles, except: [:new, :create]
   end
+  # 放在这里防止匹配/blogs/:name/articles
+  get 'blogs/:name/:tag', to: 'search/blog_tag_search#index', as: 'blog_tag_search'
 
   resources :blog_punishments, except: :show
 
