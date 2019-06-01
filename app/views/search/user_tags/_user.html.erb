@@ -1,0 +1,7 @@
+<div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
+  <%= avatar_of(user, 96) %>
+  <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
+  <small><%= @users_follower_count[user.id] %>名关注者</small>
+  <div class="card-text small"><%= user.profile %></div>
+  <%= user_tag_list(user.tags) %>
+</div>

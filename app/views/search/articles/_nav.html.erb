@@ -1,0 +1,8 @@
+<ul class="nav nav-justified mb-2">
+  <li class="nav-item">
+    <%= link_to '文章', search_articles_path(query: params[:query]), class: 'nav-link border' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to '用户', search_users_path(query: params[:query]), class: 'nav-link border' %>
+  </li>
+</ul>
