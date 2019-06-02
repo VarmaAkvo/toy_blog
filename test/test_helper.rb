@@ -14,4 +14,12 @@ end
 # 引入Devise的相关测试辅助方法
 class ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
+  # 用于在测试中通过基础身份验证
+  def headers_hash
+    { headers:
+      { Authorization:
+        ActionController::HttpAuthentication::Basic.encode_credentials('admin', 'admin')
+      }
+    }
+  end
 end

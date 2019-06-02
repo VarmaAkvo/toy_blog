@@ -43,6 +43,7 @@ Rails.application.routes.draw do
         put 'disagree'
       end
     end
+    resources :users, only: [:index]
   end
 
   devise_for :users

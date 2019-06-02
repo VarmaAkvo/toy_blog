@@ -1,5 +1,4 @@
-class Admin::ReportsController < ApplicationController
-  http_basic_authenticate_with name: "admin", password: "admin"
+class Admin::ReportsController < Admin::ApplicationController
   def index
     @reports = Report.includes(:reporter, :reported).has_not_processed
                      .order(created_at: :desc).page(params[:page]).per_page(10)

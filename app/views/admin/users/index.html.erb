@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">用户名</th>
+      <th scope="col">被举报成功记录总数</th>
+      <th scope="col">最近一个月被举报成功记录数</th>
+      <th scope="col">最后被举报成功时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <%= user.name %>
+        </td>
+        <td>
+          <%= @reported_record_count[user.id] %>
+        </td>
+        <td>
+          <%= @recent_a_month_reported_count[user.id] %>
+        </td>
+        <td>
+          <%= @last_reports[user.id].created_at.strftime('%Y年%m月%d日 %H:%M') %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @users, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>

@@ -21,6 +21,8 @@ class User < ApplicationRecord
   has_many :blog_punishments, foreign_key: :punisher_id, dependent: :destroy
   has_many :punishing, class_name: 'User', through: :blog_punishments, source: :punished
 
+  has_many :reported_records, -> { where(processed: true) }, class_name: 'Report', foreign_key: :reported_id
+
   has_one_attached :avatar
   after_destroy :delete_tags
 
