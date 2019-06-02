@@ -21,6 +21,8 @@ class User < ApplicationRecord
   has_many :blog_punishments, foreign_key: :punisher_id, dependent: :destroy
   has_many :punishing, class_name: 'User', through: :blog_punishments, source: :punished
 
+  has_one :punishment, dependent: :destroy
+
   has_many :reported_records, -> { where(processed: true) }, class_name: 'Report', foreign_key: :reported_id
 
   has_one_attached :avatar
@@ -47,7 +49,14 @@ class User < ApplicationRecord
   end
 
   def punished?(user)
-    user.punishing.exists?(self.id)
+    blog_punishment = BlogPunishment.find_by(punisher_id: user.id, punished_id: self.id)
+    return false if blog_punishment.nil?
+    if blog_punishment.expire_time > Time.current
+      return true
+    else
+      blog_punishment.destroy
+      return false
+    end
   end
 
   attr_accessor :tag_list

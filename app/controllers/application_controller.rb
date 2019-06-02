@@ -30,4 +30,17 @@ class ApplicationController < ActionController::Base
       @has_new_notify = true
     end
   end
+
+  def is_punished_by_admin?
+    punishment = Punishment.find_by(user_id: current_user.id)
+    return false if punishment.nil?
+    if punishment.expire_time > Time.current
+      flash[:alert] = "你在#{punishment.expire_time.strftime('%Y年%m月%d日 %H:%M')}之前无法进行发文章、评论和回复。"
+      redirect_to root_path
+      return true
+    else
+      punishment.destroy
+      return false
+    end
+  end
 end

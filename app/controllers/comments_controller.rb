@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :is_punished_by_admin?, only: :create
   def create
     @article = Article.find(params[:article_id])
     # 被封禁的用户无法发评论

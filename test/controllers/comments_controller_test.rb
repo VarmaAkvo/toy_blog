@@ -19,6 +19,24 @@ class CommentControllerTest < ActionDispatch::IntegrationTest
         content: 'comment'
         }}
     end
+    # 封禁过期解除后可正常发评论
+    travel_to 2.days.after do
+      assert_difference('Comment.count') do
+        post article_comments_path(@article), params: {comment: {
+          content: 'comment'
+          }}
+      end
+    end
+  end
+
+  test 'the user punished by admin can not create any comment' do
+    sign_in users(:admin_punished)
+    @article = articles(:one)
+    assert_no_difference('Comment.count') do
+      post article_comments_path(@article), params: {comment: {
+        content: 'comment'
+        }}
+    end
   end
 
   test "should destroy only user is article's owner" do

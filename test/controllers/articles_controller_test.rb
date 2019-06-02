@@ -91,6 +91,15 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 10, Article.last.tags.count
   end
 
+  test 'the user punished by admin can not create any article' do
+    sign_in users(:admin_punished)
+    assert_no_difference('Article.count') do
+      post articles_path, params: { article: {
+        title: 'new_artcle', content: 'content', tag_list: ''
+        }}
+    end
+  end
+
   test 'should update article' do
     title, content = 'new_artcle', '中文'
     original_tags = @article.tags.pluck(:name).sort

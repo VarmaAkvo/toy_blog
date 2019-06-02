@@ -1,0 +1,2 @@
+module Admin::PunishmentsHelper
+end

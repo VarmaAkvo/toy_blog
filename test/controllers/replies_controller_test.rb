@@ -18,6 +18,24 @@ class RepliesControllerTest < ActionDispatch::IntegrationTest
         content: 'reply'
         }}
     end
+    # 封禁过期解除后可正常发评论
+    travel_to 2.days.after do
+      assert_difference('Reply.count') do
+        post comment_replies_path(@comment), params: {reply: {
+          content: 'reply'
+          }}
+      end
+    end
+  end
+
+  test 'the user punished by admin can not create any reply' do
+    @comment = comments(:one)
+    sign_in users(:admin_punished)
+    assert_no_difference('Reply.count') do
+      post comment_replies_path(@comment), params: {reply: {
+        content: 'reply'
+        }}
+    end
   end
 
   test "should destroy only user is article's owner" do

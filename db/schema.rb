@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_02_011721) do
+ActiveRecord::Schema.define(version: 2019_06_02_122520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,12 @@ ActiveRecord::Schema.define(version: 2019_06_02_011721) do
     t.integer "floor", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "punishments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "expire_time", null: false
+    t.index ["user_id"], name: "index_punishments_on_user_id"
   end
 
   create_table "relations", force: :cascade do |t|
@@ -172,6 +178,7 @@ ActiveRecord::Schema.define(version: 2019_06_02_011721) do
   add_foreign_key "comment_notify_visits", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
+  add_foreign_key "punishments", "users"
   add_foreign_key "replies", "comments"
   add_foreign_key "replies", "users"
   add_foreign_key "reply_notify_visits", "users"

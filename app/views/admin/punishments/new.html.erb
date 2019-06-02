@@ -1,0 +1,23 @@
+<div class="col-6 offset-3">
+  <h2 class="bg-dark p-3 mb-0 text-white rounded-top">封禁用户</h2>
+  <div class="px-2">
+    <%= form_for [:admin, @punishment] do |f| %>
+      <div class="field form-group pt-2">
+        <%= f.label :punished_name %>
+        <%= f.text_field :punished_name, autofocus: true, autocomplete: "punished_name", class: "form-control" %>
+        <%= error_list(@punishment, :punished_name) %>
+      </div>
+
+      <div class="field form-group pt-2">
+        <%= f.label :expire_time %>
+        <%= f.text_field :expire_time, autocomplete: "expire_time", class: "form-control" %>
+        <%= error_list(@punishment, :expire_time) %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit '封禁', class: "btn btn-info btn-block" %>
+      </div>
+    <% end %>
+  </div>
+  <%= link_to '返回目录', admin_punishments_path %>
+</div>

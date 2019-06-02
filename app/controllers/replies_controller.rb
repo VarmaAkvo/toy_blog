@@ -1,6 +1,7 @@
 class RepliesController < ApplicationController
   before_action :authenticate_user!
-
+  before_action :is_punished_by_admin?, only: :create
+  
   def create
     @comment = Comment.find(params[:comment_id])
     # 被封禁的用户无法回复

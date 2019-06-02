@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       end
     end
     resources :users, only: [:index]
+    resources :punishments, except: :show
   end
 
   devise_for :users

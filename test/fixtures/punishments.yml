@@ -1,0 +1,5 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 4
+  expire_time: 2019-06-02 20:25:20

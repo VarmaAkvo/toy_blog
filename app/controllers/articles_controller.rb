@@ -3,6 +3,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, except: [:new, :create, :show, :index]
   before_action :set_owner, only: [:index, :show]
   before_action :confirm_authority, only: [:edit, :update, :destroy]
+  before_action :is_punished_by_admin?, only: :create
 
   def index
     # 当前with_rich_text_content_and_embeds并不能解决N+1问题， 留着等修复

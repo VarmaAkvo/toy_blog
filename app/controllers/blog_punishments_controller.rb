@@ -2,7 +2,9 @@ class BlogPunishmentsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @blog_punishments = BlogPunishment.includes(:punished).where(punisher_id: current_user.id)
+    @blog_punishments = BlogPunishment.includes(:punished)
+                                      .where(punisher_id: current_user.id)
+                                      .page(params[:page]).per_page(10)
   end
 
   def new
@@ -13,6 +15,7 @@ class BlogPunishmentsController < ApplicationController
     expire_time = params[:blog_punishment][:expire_time]
     punished = User.find_by(name: params[:blog_punishment][:punished_name])
     if punished.nil?
+      @blog_punishment = BlogPunishment.new
       flash[:alert] = "不存在该用户。"
       render 'new' and return
     end
