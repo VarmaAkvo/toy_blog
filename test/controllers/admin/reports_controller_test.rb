@@ -27,7 +27,8 @@ class Admin::ReportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should disagree a report' do
-    assert_no_difference('Article.count') do
+    # 反对一项举报会将其删除
+    assert_difference('Report.count', -1) do
       put disagree_admin_report_path(@report), headers: @headers_hash
     end
     assert_redirected_to admin_reports_path

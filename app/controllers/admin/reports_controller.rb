@@ -23,7 +23,7 @@ class Admin::ReportsController < ApplicationController
 
   def disagree
     @report = Report.find(params[:id])
-    @report.update(processed: true)
+    @report.destroy
     flash[:notice] = '已反对一项举报。'
     redirect_to admin_reports_path
   end
