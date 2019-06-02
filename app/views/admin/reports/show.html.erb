@@ -1,0 +1,23 @@
+<div class="container bg-light">
+  <div class="row bg-dark text-white py-2">
+    <span class="col">举报人: <%= @report.reporter.name %></span>
+    <span class="col">被举报人: <%= @report.reported.name %></span>
+  </div>
+  <div class="row d-flex flex-column p-2">
+    <h5>举报内容:</h5>
+    <div class="bg-secondary text-white p-2">
+      <%= @report.reportable.content %>
+    </div>
+  </div>
+  <div class="row d-flex flex-column p-2">
+    <h4>举报理由</h4>
+    <div class="bg-secondary text-white p-2">
+      <%= @report.reason %>
+    </div>
+  </div>
+  <div class="row px-2 d-flex justify-content-between">
+    <%= link_to '同意', agree_admin_report_path(@report), method: :put, class: 'btn btn-info' %>
+    <%= link_to '反对', disagree_admin_report_path(@report), method: :put, class: 'btn btn-danger' %>
+  </div>
+</div>
+<%= link_to '返回目录', admin_reports_path(@report) %>

@@ -16,8 +16,8 @@ class ReportsController < ApplicationController
     report_params = {reason: reason, reportable_id: reportable_id,
                      reportable_type: reportable_type,
                      reported_id: reported_id, reporter_id: reporter_id}
-    # 同一人不能重复举报
-    if Report.exists?(report_params.slice(:reportable_id, :reportable_type, :reporter_id))
+    # # 同一个reportable，如果用户之前的举报还没处理则不能重复举报
+    if Report.has_not_processed.exists?(report_params.slice(:reportable_id, :reportable_type, :reporter_id))
       flash[:alert] = '不能重复举报。'
       redirect_to root_path and return
     end

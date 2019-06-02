@@ -19,12 +19,19 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
         }}
     end
     assert_redirected_to root_path
-    # 不能重复举报
+    # 同一个reportable，如果用户之前的举报还没处理则不能重复举报
     assert_no_difference('Report.count') do
       post reports_path, params:{ report: {
         reason: 'reason2',
         reportable_type: 'Article', reportable_id: 1,
         }}
     end
+    Report.last.update(processed: true)
+    assert_difference('Report.count') do
+      post reports_path, params:{ report: {
+        reason: 'reason',
+        reportable_type: 'Article', reportable_id: 1,
+        }}
+    end    
   end
 end

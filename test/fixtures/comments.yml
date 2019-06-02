@@ -4,3 +4,9 @@ one:
   article_id: 1
   floor: 1
   content: comment
+two:
+  id: 2
+  user_id: 1
+  article_id: 2
+  floor: 1
+  content: comment

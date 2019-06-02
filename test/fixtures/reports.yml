@@ -7,3 +7,17 @@ one:
   reportable_type: Article
   reportable_id: 2
   processed: false
+two:
+  reason: MyString
+  reporter_id: 3
+  reported_id: 2
+  reportable_type: Article
+  reportable_id: 2
+  processed: false
+three:
+  reason: MyString
+  reporter_id: 3
+  reported_id: 1
+  reportable_type: Comment
+  reportable_id: 2
+  processed: false

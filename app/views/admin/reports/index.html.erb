@@ -1,0 +1,15 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">举报人</th>
+      <th scope="col">被举报人</th>
+      <th scope="col">举报类型</th>
+      <th scope="col">举报时间</th>
+      <th scope="col">详细</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @reports %>
+  </tbody>
+</table>
+<%= will_paginate @reports, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
