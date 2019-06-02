@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_30_042839) do
+ActiveRecord::Schema.define(version: 2019_06_02_011721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,21 @@ ActiveRecord::Schema.define(version: 2019_05_30_042839) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_reply_notify_visits_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.string "reason", null: false
+    t.boolean "processed", default: false, null: false
+    t.bigint "reporter_id", null: false
+    t.bigint "reported_id", null: false
+    t.string "reportable_type", null: false
+    t.bigint "reportable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["processed"], name: "index_reports_on_processed"
+    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable_type_and_reportable_id"
+    t.index ["reported_id"], name: "index_reports_on_reported_id"
+    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
   end
 
   create_table "tagging", force: :cascade do |t|

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   # 放在这里防止匹配/blogs/:name/articles
   get 'blogs/:name/:tag', to: 'search/blog_tag_search#index', as: 'blog_tag_search'
 
+  resources :reports, only: [:new, :create]
   resources :blog_punishments, except: :show
 
   devise_for :users

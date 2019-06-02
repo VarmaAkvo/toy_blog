@@ -1,0 +1,21 @@
+<div class="col-6 offset-3">
+  <h2 class="bg-dark p-3 mb-0 text-white rounded-top">举报</h2>
+  <div class="border p-2">
+    <%= @reportable.content %>
+  </div>
+  <div class="px-2">
+    <%= form_for(@report) do |f| %>
+      <%= f.hidden_field :reportable_id %>
+      <%= f.hidden_field :reportable_type %>
+      <div class="field form-group pt-2">
+        <%= f.label :reason %>
+        <%= f.text_field :reason, autofocus: true, autocomplete: "reason", class: "form-control" %>
+        <%= error_list(@report, :reason) %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit '举报', class: "btn btn-info btn-block" %>
+      </div>
+    <% end %>
+  </div>
+</div>

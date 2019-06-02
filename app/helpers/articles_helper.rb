@@ -35,4 +35,9 @@ module ArticlesHelper
       content_tag(:div, tags, class: "text-wrap")
     end
   end
+
+  def report_link(type, id, css)
+    path = new_report_path(report: {reportable_id: id, reportable_type: type})
+    link_to('举报', path, class: css, role: 'button' )
+  end
 end

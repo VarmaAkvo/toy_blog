@@ -6,7 +6,7 @@
       <% if @owner == current_user %>
         <%= link_to '删除', comment_path(comment), method: :delete, data: {confirm: '你确定要删除它？'}, class: 'card-link float-right text-danger small' %>
       <% else %>
-        <%= link_to('举报', '#', class: 'card-link float-right text-danger small') %>
+        <%= report_link('Comment', comment.id, 'card-link float-right text-danger small') %>
       <% end %>
     </div>
     <div class=" ">
