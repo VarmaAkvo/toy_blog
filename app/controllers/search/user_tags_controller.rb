@@ -8,7 +8,7 @@ class Search::UserTagsController < ApplicationController
     @users = User.includes(:avatar_attachment, :tags)
                  .where(id: @user_ids).page(params[:page]).per_page(9)
     @users_hash = @users.map {|user| [user.id, user]}.to_h
-    @users_follower_count = Relation.where(followed_id: @users_ids)
+    @users_follower_count = Relation.where(followed_id: @user_ids)
                                     .group(:followed_id).count(:follower_id)
   end
 end

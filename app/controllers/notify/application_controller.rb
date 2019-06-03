@@ -7,7 +7,7 @@ class Notify::ApplicationController < ApplicationController
   private
 
   def count_new_notify
-    @current_time = Time.now
+    @current_time = Time.current
 
     @activity_last_visit = ActivityNotifyVisit.find_or_create_by(user_id: current_user.id)
     @comment_last_visit = CommentNotifyVisit.find_or_create_by(user_id: current_user.id)

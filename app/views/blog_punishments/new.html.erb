@@ -1,6 +1,7 @@
+<%= render 'blog_punishments/nav' %>
 <div class="col-6 offset-3">
   <h2 class="bg-dark p-3 mb-0 text-white rounded-top">封禁用户</h2>
-  <div class="px-2">
+  <div class="px-2 pb-2 border border-top-0">
     <%= form_for @blog_punishment do |f| %>
       <div class="field form-group pt-2">
         <%= f.label :punished_name %>
@@ -19,5 +20,4 @@
       </div>
     <% end %>
   </div>
-  <%= link_to '返回目录', blog_punishments_path %>
 </div>

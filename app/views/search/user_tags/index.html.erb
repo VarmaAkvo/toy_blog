@@ -7,7 +7,7 @@
       <% @user_ids.each do |user_id| %>
         <div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
           <% user = @users_hash[user_id] %>
-          <%= avatar_of(user, 96) %>
+          <%= avatar_of(user, 64) %>
           <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
           <small><%= @users_follower_count[user.id] %>名关注者</small>
           <div class="card-text small"><%= user.profile %></div>

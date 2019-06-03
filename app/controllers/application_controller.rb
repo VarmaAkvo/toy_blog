@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def check_new_notify
     @has_new_notify = false
-    @current_time = Time.now
+    @current_time = Time.current
 
     @activity_last_visit = ActivityNotifyVisit.find_or_create_by(user_id: current_user.id)
     if Article.exists?(user_id: current_user.following_ids, created_at: @activity_last_visit.updated_at..@current_time)
