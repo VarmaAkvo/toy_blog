@@ -2,4 +2,4 @@
 
 one:
   user_id: 4
-  expire_time: 2019-06-02 20:25:20
+  expire_time: <%= 1.days.after %>
