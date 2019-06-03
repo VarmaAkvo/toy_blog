@@ -1,7 +1,7 @@
 <div class="col-6 offset-3">
   <%= render "devise/shared/error_messages", resource: resource %>
   <h2 class="bg-dark p-3 mb-0 text-white rounded-top">编辑账户</h2>
-  <div class="px-2">
+  <div class="px-2 pb-2 border boder-top-0">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <div class="field form-group pt-2">
         <%= f.label :email %><br />
@@ -34,13 +34,10 @@
         <%= f.submit "更新", class: "btn btn-info btn-block" %>
       </div>
     <% end %>
-
-    <h3 class="bg-dark p-3 mb-0 mt-2 text-white rounded-top">删除我的账户</h3>
-    <div class="p-2">
-      <p class="d-inline mr-2">不愉快?</p>
-      <%= button_to "删除账户", registration_path(resource_name), data: { confirm: "你确定?" }, method: :delete, class: "btn btn-info", form_class: "d-inline" %>
-    </div>
-
-    <%= link_to "返回", :back %>
+  </div>
+  <h3 class="bg-dark p-3 mb-0 mt-2 text-white rounded-top">删除我的账户</h3>
+  <div class="p-2 border boder-top-0 d-flex justify-content-between">
+    <span>感觉不愉快?</span>
+    <%= button_to "删除账户", registration_path(resource_name), data: { confirm: "你确定?" }, method: :delete, class: "btn btn-danger", form_class: "d-inline" %>
   </div>
 </div>

@@ -4,7 +4,17 @@
       拥有<%= params[:tag] %> Tag的用户
     </h4>
     <div class="row">
-      <%= render partial:'search/user_tags/user', collection: @users %>
+      <% @user_ids.each do |user_id| %>
+        <div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
+          <% user = @users_hash[user_id] %>
+          <%= avatar_of(user, 96) %>
+          <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
+          <small><%= @users_follower_count[user.id] %>名关注者</small>
+          <div class="card-text small"><%= user.profile %></div>
+          <%= user_tag_list(user.tags) %>
+        </div>
+      <% end %>
+      <%#= render partial:'search/user_tags/user', collection: @users %>
     </div>
     <%= will_paginate @users, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
   <% else %>

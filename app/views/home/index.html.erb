@@ -3,7 +3,7 @@
   <div class="row ">
     <% @ranking_users.each do |user| %>
       <div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
-        <%= avatar_of(user, 96) %>
+        <%= avatar_of(user, 64) %>
         <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
         <small><%= @ranking_users_hash[user.id] %>名关注者</small>
         <div class="card-text small"><%= user.profile %></div>
@@ -18,7 +18,7 @@
     <div class="row">
       <% @recent_following_articles.each do |article| %>
         <div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
-          <%= avatar_of(article.user, 96) %>
+          <%= avatar_of(article.user, 64) %>
           <h5 class="mb-1"><%= link_to article.user.name, user_articles_path(article.user.name), class: 'card-link' %></h5>
           <h5 class="card-title mb-1">
             <%= link_to article.title, user_article_path(article.user.name,article), class: 'card-link' %>
@@ -35,7 +35,7 @@
   <div class="row">
     <% @recent_articles.each do |article| %>
       <div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
-        <%= avatar_of(article.user, 96) %>
+        <%= avatar_of(article.user, 64) %>
         <h5 class="mb-1"><%= link_to article.user.name, user_articles_path(article.user.name), class: 'card-link' %></h5>
         <h5 class="card-title mb-1">
           <%= link_to article.title, user_article_path(article.user.name,article), class: 'card-link' %>
