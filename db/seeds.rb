@@ -59,6 +59,17 @@ User.where(id: first_group_ids).each do |fg_user|
     sg_user.follow fg_user
   end
 end
+# Reports
+ length = user_ids.length
+Article.all.shuffle.take(20).each do |article|
+  article.reports.create(reason: 'faker', reported_id: article.user_id, reporter_id: user_ids[rand(length)])
+end
+Comment.all.shuffle.take(20).each do |comment|
+  comment.reports.create(reason: 'faker', reported_id: comment.user_id, reporter_id: user_ids[rand(length)])
+end
+Reply.all.shuffle.take(20).each do |reply|
+  reply.reports.create(reason: 'faker', reported_id: reply.user_id, reporter_id: user_ids[rand(length)])
+end
 # BlogPunishments
 (user_ids - [varma.id]).shuffle.take(20).each do |punished_id|
   varma.blog_punishments.create(punished_id: punished_id, expire_time: 30.days.after)

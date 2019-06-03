@@ -5,7 +5,7 @@ class Admin::PunishmentsController < ApplicationController
   end
 
   def new
-    @punishment = Punishment.new
+    @punishment = Punishment.new(punished_name: params[:punished_name])
   end
 
   def create
