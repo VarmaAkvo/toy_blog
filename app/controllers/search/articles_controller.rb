@@ -1,4 +1,5 @@
 class Search::ArticlesController < ApplicationController
+  before_action :authenticate_user!, only: :following
   def index
     @articles_array = Article.paginate_by_sql([<<-SQL ,params[:query]], page: params[:page], per_page: 10
       with title_and_content as (
@@ -28,5 +29,16 @@ class Search::ArticlesController < ApplicationController
     @articles = Article.with_rich_text_content_and_embeds.includes(:tags, user: :avatar_attachment)
                        .where(id: @articles_array.map(&:id))
     @articles_hash = @articles.map { |a| [a.id, a] }.to_h
+  end
+
+  def recent
+    @articles = Article.includes(:tags, user: :avatar_attachment)
+                       .order(created_at: :desc).page(params[:page]).per_page(10)
+  end
+
+  def following
+    @articles = Article.includes(:tags, user: :avatar_attachment)
+                                        .where(user_id: current_user.following_ids)
+                                        .order(created_at: :desc).page(params[:page]).per_page(10)
   end
 end

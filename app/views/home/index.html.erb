@@ -11,6 +11,9 @@
       </div>
     <% end %>
   </div>
+  <div class="row">
+    <%= link_to '更多', search_ranking_users_path, class: 'btn btn-outline-secondary btn-block'%>
+  </div>
 </div>
 <% if user_signed_in? &&  @recent_following_articles.size > 0 %>
   <div class="container mb-3">
@@ -28,6 +31,9 @@
         </div>
       <% end %>
     </div>
+    <div class="row">
+      <%= link_to '更多', search_following_articles_path, class: 'btn btn-outline-secondary btn-block'%>
+    </div>
   </div>
 <% end %>
 <div class="container mb-3">
@@ -44,5 +50,8 @@
         <%= article_tag_list(article.tags) %>
       </div>
     <% end %>
+  </div>
+  <div class="row">
+    <%= link_to '更多', search_recent_articles_path, class: 'btn btn-outline-secondary btn-block'%>
   </div>
 </div>

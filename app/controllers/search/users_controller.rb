@@ -1,6 +1,6 @@
 class Search::UsersController < ApplicationController
   def index
-    @users_array = User.paginate_by_sql([<<-SQL , params[:query]], page: params[:page], per_page: 10
+    @users_array = User.paginate_by_sql([<<-SQL , params[:query]], page: params[:page], per_page: 9
       with utags as (
       	select string_agg(t.name, ' ') as name, u.id as u_id
       	from tags as t, tagging as tg, users as u
@@ -24,6 +24,13 @@ class Search::UsersController < ApplicationController
     # 预加载关联
     @users = User.includes(:tags, :avatar_attachment).where(id: @users_array.map(&:id))
     @users_hash = @users.map {|u| [u.id, u]}.to_h
+    @users_follower_count = Relation.where(followed_id: @users.ids)
+                                    .group(:followed_id).count(:follower_id)
+  end
+
+  def ranking
+    @users = User.includes(:tags, :avatar_attachment).joins(:following).group(:id)
+                .order(Arel.sql('COUNT(relations.id) DESC')).page(params[:page]).per_page(9)
     @users_follower_count = Relation.where(followed_id: @users.ids)
                                     .group(:followed_id).count(:follower_id)
   end

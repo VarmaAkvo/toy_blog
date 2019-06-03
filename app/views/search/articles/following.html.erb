@@ -1,0 +1,7 @@
+<div class="container">
+  <h4 class="rounded border-dark px-4 py-3 bg-dark text-white ">
+    关注者最近所发布的文章
+  </h4>
+  <%= render partial: 'search/article_tags/article', collection: @articles %>
+  <%= will_paginate @articles, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
+</div>

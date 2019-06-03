@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   namespace :search do
     get 'users/tags/:tag',    to: 'user_tags#index',    as: 'user_tags'
     get 'articles/tags/:tag', to: 'article_tags#index', as: 'article_tags'
-    get 'articles',    to: 'articles#index',     as: 'articles'
-    get 'users',       to: 'users#index',        as: 'users'
+    get 'articles',           to: 'articles#index',     as: 'articles'
+    get 'recent_articles',    to: 'articles#recent',    as: 'recent_articles'
+    get 'following_articles', to: 'articles#following', as: 'following_articles'
+    get 'users',         to: 'users#index',    as: 'users'
+    get 'ranking_users', to: 'users#ranking',  as: 'ranking_users'
   end
 
   namespace :notify do
