@@ -47,8 +47,8 @@ class User < ApplicationRecord
                               .group(:id)}
   scope :with_tag_strings_and_follower_count, -> {
      select('users.*, t.tag_strings, f.follower_count')
-    .joins("INNER JOIN (#{follower_count.to_sql}) AS f ON f.id = users.id
-            INNER JOIN (#{tag_strings.to_sql}) AS t ON t.id = users.id")
+    .joins("LEFT OUTER JOIN (#{follower_count.to_sql}) AS f ON f.id = users.id
+            LEFT OUTER JOIN (#{tag_strings.to_sql}) AS t ON t.id = users.id")
   }
 
   def follow(user)

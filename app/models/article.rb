@@ -21,7 +21,7 @@ class Article < ApplicationRecord
                            .group(:id)}
   scope :with_tag_strings, -> {
     select('articles.*, t.tag_strings')
-   .joins("INNER JOIN (#{tag_strings.to_sql}) AS t ON t.id = articles.id")
+   .joins("LEFT OUTER JOIN (#{tag_strings.to_sql}) AS t ON t.id = articles.id")
   }
 
   before_destroy do
