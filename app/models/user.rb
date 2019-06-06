@@ -36,6 +36,21 @@ class User < ApplicationRecord
   validates :name, presence:true, uniqueness: { case_sensitive: false }
   validates :profile, length: {maximum: 100}
 
+  scope :with_tag_strings, -> { joins(:tags)
+                               .select("users.*, string_agg(tags.name, ' ') AS tag_strings")
+                               .group(:id)}
+  scope :tag_strings, -> { joins(:tags)
+                          .select("users.id, string_agg(tags.name, ' ') AS tag_strings")
+                          .group(:id)}
+  scope :follower_count, -> { joins(:followers)
+                              .select("users.id, COUNT(relations.id) AS follower_count")
+                              .group(:id)}
+  scope :with_tag_strings_and_follower_count, -> {
+     select('users.*, t.tag_strings, f.follower_count')
+    .joins("INNER JOIN (#{follower_count.to_sql}) AS f ON f.id = users.id
+            INNER JOIN (#{tag_strings.to_sql}) AS t ON t.id = users.id")
+  }
+
   def follow(user)
     following << user
   end
@@ -57,6 +72,14 @@ class User < ApplicationRecord
       blog_punishment.destroy
       return false
     end
+  end
+  # 用于current_user
+  def get_follower_count
+    followers.count
+  end
+  # 用于current_user
+  def get_tag_strings
+    tags.pluck(:name).join(' ')
   end
 
   attr_accessor :tag_list

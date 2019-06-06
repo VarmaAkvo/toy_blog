@@ -7,7 +7,7 @@ module ArticlesHelper
   end
 
   def tag_list(tags, record_type)
-    return nil if tags.empty?
+    return nil if !tags.present?
 
     path = "search_#{record_type}_tags_path"
     tags.map(&:name).map do |tag|
@@ -16,17 +16,34 @@ module ArticlesHelper
       content_tag(:div, tags, class: "text-break")
     end
   end
-
-  def user_tag_list(tags)
-    tag_list(tags, 'user')
+  #接受[tag_name, search_path]来生成对应的链接
+  def new_tag_list(array)
+    array.map do |tag, path|
+      link_to tag, path, class: 'small px-2'
+    end.join.html_safe.yield_self do |tags|
+      content_tag(:div, tags, class: "text-break")
+    end
   end
 
-  def article_tag_list(tags)
-    tag_list(tags, 'article')
+  def user_tag_list(tag_list)
+    return nil if tag_list.blank?
+    params = tag_list.split.map do |tag|
+      ['#' + tag, search_user_tags_path(tag)]
+    end
+    new_tag_list(params)
+    # tag_list(tags, 'user')
+  end
+
+  def article_tag_list(tag_list)
+    return nil if tag_list.blank?
+    params = tag_list.split.map do |tag|
+      ['#' + tag, search_article_tags_path(tag)]
+    end
+    new_tag_list(params)
   end
 
   def tag_list_with_count(uats)
-    return nil if uats.empty?
+    return nil unless uats.present?
     uats.map do |u|
       [u.tag.name, u.total]
     end.map do |tag, total|

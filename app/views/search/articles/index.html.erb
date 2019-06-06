@@ -1,14 +1,11 @@
 <div class="container">
   <%= render 'search/articles/nav' %>
-  <% if @articles_array.size > 0 %>
+  <% if @articles.present? %>
     <h4 class="rounded border-dark px-4 py-3 bg-dark text-white ">
       <%= params[:query] %>的文章搜索结果
     </h4>
-    <%#= render  partial: 'search/article_tags/article', collection: @articles_array %>
-    <% @articles_array.each do |article| %>
-      <%= render 'search/article_tags/article', article: @articles_hash[article.id] %>
-    <% end %>
-    <%= will_paginate @articles_array, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
+    <%= render  partial: 'search/article_tags/article', collection: @articles %>
+    <%= will_paginate @articles, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
   <% else %>
     <div class="border p-3">
       不存在符合<%= params[:query]%> 的文章

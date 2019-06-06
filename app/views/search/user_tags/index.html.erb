@@ -1,20 +1,10 @@
 <div class="container">
-  <% if @users.length > 0 %>
+  <% if @users.present? %>
     <h4 class="rounded-top border-dark row px-4 py-3 mb-0 bg-dark text-white ">
       拥有<%= params[:tag] %> Tag的用户
     </h4>
     <div class="row">
-      <% @user_ids.each do |user_id| %>
-        <div class="border col-4 d-flex flex-column justify-content-center align-items-center py-2">
-          <% user = @users_hash[user_id] %>
-          <%= avatar_of(user, 64) %>
-          <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
-          <small><%= @users_follower_count[user.id] %>名关注者</small>
-          <div class="card-text small"><%= user.profile %></div>
-          <%= user_tag_list(user.tags) %>
-        </div>
-      <% end %>
-      <%#= render partial:'search/user_tags/user', collection: @users %>
+      <%= render partial:'search/user_tags/user', collection: @users %>
     </div>
     <%= will_paginate @users, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
   <% else %>

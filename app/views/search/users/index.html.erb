@@ -1,15 +1,13 @@
 <div class="container">
   <%= render 'search/articles/nav' %>
-  <% if @users_array.size > 0 %>
+  <% if @users.present? %>
     <h4 class="rounded-top border-dark row px-4 py-3 mb-0 bg-dark text-white ">
       <%= params[:query] %>的用户搜索结果
     </h4>
     <div class="row">
-      <% @users_array.each do |user| %>
-        <%= render 'search/user_tags/user', user: @users_hash[user.id] %>
-      <% end %>
+      <%= render partial: 'search/user_tags/user', collection: @users %>
     </div>
-    <%= will_paginate @users_array, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
+    <%= will_paginate @users, previous_label: '<<', next_label: '>>', class: 'digg_pagination' %>
   <% else %>
     <div class="border p-3">
       不存在符合<%= params[:query]%> 的用户
