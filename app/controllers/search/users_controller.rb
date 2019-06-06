@@ -32,9 +32,9 @@ class Search::UsersController < ApplicationController
       WITH users_tag_strings AS (
         SELECT string_agg(t.name, ' ') AS tag_strings, u.id
       	FROM users u
-      	  INNER JOIN tagging tg ON tg.taggable_id = u.id
+      	  LEFT OUTER JOIN tagging tg ON tg.taggable_id = u.id
       	         AND tg.taggable_type = 'User'
-      	  INNER JOIN tags t ON tg.tag_id = t.id
+      	  LEFT OUTER JOIN tags t ON tg.tag_id = t.id
         GROUP BY u.id
       ), users_follower_count AS (
         SELECT COUNT(r.id) AS follower_count, u.id
@@ -49,8 +49,8 @@ class Search::UsersController < ApplicationController
       ), vector AS (
         SELECT  u.id,
       	      (setweight(to_tsvector(u.name), 'A') ||
-      		    to_tsvector(u.profile) ||
-      		    setweight(to_tsvector(u.tag_strings), 'B')
+      		    to_tsvector(COALESCE(u.profile, '')) ||
+      		    setweight(to_tsvector(COALESCE(u.tag_strings, '')), 'B')
       		  ) as tsv
         FROM users_with_tag_strings_and_follower_count u
       ), query AS (

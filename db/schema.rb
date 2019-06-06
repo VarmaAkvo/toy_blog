@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_03_110354) do
+ActiveRecord::Schema.define(version: 2019_06_06_064117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_06_03_110354) do
     t.bigint "record_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index "to_tsvector('english'::regconfig, body)", name: "gin_index_action_text_rich_texts_on_body", using: :gin
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_06_03_110354) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index "to_tsvector('english'::regconfig, (title)::text)", name: "gin_index_articles_on_title", using: :gin
     t.index ["title"], name: "index_articles_on_title"
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
@@ -147,6 +149,7 @@ ActiveRecord::Schema.define(version: 2019_06_03_110354) do
   create_table "tags", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
+    t.index "to_tsvector('english'::regconfig, (name)::text)", name: "gin_index_tags_on_name", using: :gin
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
@@ -169,6 +172,8 @@ ActiveRecord::Schema.define(version: 2019_06_03_110354) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "name", null: false
     t.string "profile", default: ""
+    t.index "to_tsvector('english'::regconfig, (name)::text)", name: "gin_index_users_on_name", using: :gin
+    t.index "to_tsvector('english'::regconfig, (profile)::text)", name: "gin_index_users_on_profile", using: :gin
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
