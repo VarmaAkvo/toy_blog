@@ -39,7 +39,7 @@ class Search::UsersController < ApplicationController
       ), users_follower_count AS (
         SELECT COUNT(r.id) AS follower_count, u.id
       	FROM users u
-      	  INNER JOIN relations r ON r.followed_id = u.id
+      	  LEFT OUTER JOIN relations r ON r.followed_id = u.id
       	GROUP BY u.id
       ), users_with_tag_strings_and_follower_count AS (
         SELECT u.*, uts.tag_strings, ufc.follower_count
