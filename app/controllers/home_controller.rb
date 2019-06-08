@@ -2,13 +2,7 @@ class HomeController < ApplicationController
   def index
     # 如果用户已登录，则选出所关注的博客中最新的9条
     if user_signed_in?
-=begin
-      @recent_following_articles = Article.includes(:tags, user: :avatar_attachment)
-                                          .where(user_id: current_user.following_ids)
-                                          .order(created_at: :desc).limit(9)
-=end
-      # 不load的话渲染视图时对@recent_following_articles会出错
-      @recent_following_articles = Article.with_tag_strings.includes(user: :avatar_attachment)
+      @recent_following_articles = Article.includes(user: :avatar_attachment)
                                           .where(user_id: current_user.following_ids)
                                           .order(created_at: :desc).limit(9)
     end
@@ -46,9 +40,7 @@ class HomeController < ApplicationController
     # 预加载用户头像
     #ActiveRecord::Associations::Preloader.new.preload(@ranking_users, :avatar_attachment)
     # 最新文章
-    # @recent_articles = Article.includes(:tags, user: :avatar_attachment).order(created_at: :desc).limit(9)
-    @recent_articles = Article.includes(user: :avatar_attachment).joins(:tags)
-                              .select("articles.*, string_agg(tags.name, ' ') AS tag_strings")
-                              .group(:id).order(created_at: :desc).limit(9)
+    @recent_articles = Article.includes(user: :avatar_attachment)
+                              .order(created_at: :desc).limit(9)
   end
 end

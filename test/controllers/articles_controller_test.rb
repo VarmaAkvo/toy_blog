@@ -73,8 +73,10 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     # 没有tag的文章
     assert_difference('Article.count') do
       post articles_path, params: { article: {
-        title: 'new_artcle', content: 'content', tag_list: ''
-        }}
+        title: 'new_artcle', content: '<div>content</div>', tag_list: ''
+        }
+      }
+    assert_equal 'content', Article.last.striped_tags_content
     end
     assert_redirected_to user_article_path(@user.name, Article.last)
     # 有tag的文章，重复tag会被删除
@@ -83,6 +85,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       title: 'new_artcle', content: 'content', tag_list: tags
       }}
     assert_equal tags.split.uniq.sort!, Article.last.tags.pluck(:name).sort!
+    assert_equal tags.split.uniq.sort!, Article.last.tag_list.split.sort
     # 一篇文章最多拥有10个tag
     tags = (1..11).to_a.join(' ')
     post  articles_path, params: { article: {
@@ -101,14 +104,15 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update article' do
-    title, content = 'new_artcle', '中文'
+    title, content = 'new_artcle', '<div>content</div>'
     original_tags = @article.tags.pluck(:name).sort
     put user_article_path(@user.name, @article), params: { article: {
       title: title, content: content, tag_list: 'tag1 tag2'
       }}
     @article.reload
-    assert_equal title,   @article.title
-    assert @article.content.body.to_s.include? content
+    assert_equal title, @article.title
+    assert_equal 'tag1 tag2', @article.tag_list
+    assert_equal 'content', @article.striped_tags_content
     assert_equal original_tags, @article.tags.pluck(:name).sort
     assert_redirected_to user_article_path(@user.name, @article)
   end
@@ -121,7 +125,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       title: @article.title, content: @article.content, tag_list: new_tag
       }}
     @article.reload
-    assert_equal new_tag, @article.tags.pluck(:name).join
+    assert_equal new_tag, @article.tags.pluck(:name).join(' ')
   end
 
   test 'should destroy article' do

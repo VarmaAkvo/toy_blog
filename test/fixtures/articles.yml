@@ -4,7 +4,11 @@ one:
   id: 1
   title: MyString
   user_id: 1
+  tag_list: 'tag1 tag2'
+  striped_tags_content: work?
 two:
   id: 2
   title: MyString
   user_id: 2
+  tag_list: ''
+  striped_tags_content: work!

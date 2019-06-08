@@ -17,7 +17,7 @@
       </div>
     </div>
     <%= article.content %>
-    <%= article_tag_list(article.tag_strings) %>
+    <%= article_tag_list(article.tag_list) %>
     <% if params[:action] == 'index' %>
       <%= link_to '评论', user_article_path(@owner.name, article), class: 'd-block text-right text-decoration-none' %>
     <% end %>
