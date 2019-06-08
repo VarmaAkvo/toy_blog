@@ -3,5 +3,5 @@
   <h5 class="card-title mb-1"><%= link_to user.name, user_articles_path(user.name), class: 'card-link' %></h5>
   <small><%= user.follower_count %>名关注者</small>
   <div class="card-text small"><%= user.profile %></div>
-  <%= user_tag_list(user.tag_strings) %>
+  <%= user_tag_list(user.tag_list) %>
 </div>

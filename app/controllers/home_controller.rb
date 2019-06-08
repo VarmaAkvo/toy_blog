@@ -7,38 +7,8 @@ class HomeController < ApplicationController
                                           .order(created_at: :desc).limit(9)
     end
     # 选出最受欢迎的9个用户的{id: follower_count}
-=begin
-    @ranking_users_hash = Relation.group(:followed_id).order(count_follower_id: :desc)
-                                .limit(9).count(:follower_id)
-    @ranking_users = User.includes(:tags, :avatar_attachment).find(@ranking_users_hash.keys)
-=end
-=begin
-    @ranking_users = User.includes(:tags, :avatar_attachment).joins(:followed)
-                         .select('users.*, COUNT(relations) AS followed_count')
-                         .group(:id).order('followed_count DESC').limit(9)
-=end
-=begin
-    @ranking_users = User.find_by_sql(<<-SQL)
-      WITH users_with_tag_list AS (
-        SELECT u.*, string_agg(t.name, ' ') AS tag_strings
-          FROM users u
-            INNER JOIN tagging tg ON tg.taggable_id = u.id AND tg.taggable_type = 'User'
-            INNER JOIN tags t ON t.id = tg.tag_id
-        GROUP BY u.id
-      )
-      SELECT DISTINCT u.*, COUNT(f.id) OVER (PARTITION BY u.id) AS followed_count
-        FROM users_with_tag_list u
-          INNER JOIN relations f ON f.followed_id = u.id
-        ORDER BY followed_count DESC
-        LIMIT 9;
-    SQL
-=end
-    @ranking_users = User.with_attached_avatar.select('users.*, t.tag_strings, f.follower_count')
-                         .joins("INNER JOIN (#{User.follower_count.to_sql}) AS f ON f.id = users.id
-                                 INNER JOIN (#{User.tag_strings.to_sql}) AS t ON t.id = users.id")
+    @ranking_users = User.with_attached_avatar.with_follower_count
                          .order(follower_count: :desc).limit(9)
-    # 预加载用户头像
-    #ActiveRecord::Associations::Preloader.new.preload(@ranking_users, :avatar_attachment)
     # 最新文章
     @recent_articles = Article.includes(user: :avatar_attachment)
                               .order(created_at: :desc).limit(9)

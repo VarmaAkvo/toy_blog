@@ -43,6 +43,8 @@ class ArticlesController < ApplicationController
       flash[:notice] = "新文章发布成功。"
       redirect_to user_article_url(current_user.name, @article)
     else
+      # 保留tag_list
+      @article.tag_list = article_params[:tag_list]
       render 'new'
     end
   end
@@ -51,11 +53,10 @@ class ArticlesController < ApplicationController
     @article.striped_tags_content = ActionController::Base.helpers.strip_tags(article_params[:content]).strip
     if @article.update(article_params.slice(:title, :content))
       # 如果没改tags就不进行更新tag，即使只改顺序也不更新tag
-      tag_array = @article.tags.pluck(:name)
-      unless params[:article][:tag_list].split.sort == tag_array.sort
+      unless params[:article][:tag_list].split.sort == @article.tags.pluck(:name).sort
         @article.update_tags(params[:article][:tag_list])
         # 更新tag_list保持一致
-        @article.update(tag_list: tag_array.join(' '))
+        @article.update(tag_list: @article.tags.pluck(:name).join(' '))
       end
       flash[:notice] = "文章更新成功。"
       redirect_to user_article_url(current_user.name, @article)

@@ -26,6 +26,7 @@ class Settings::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_settings_user_url
     assert_equal profile, @user.reload.profile
     assert_equal name, @user.name
+    assert_equal tag_list.split.sort, @user.tag_list.split.sort
     # 更新tag
     t1_id = Tag.find_by(name: 't1').id
     assert_not t1_id.nil?
