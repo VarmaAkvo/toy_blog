@@ -1,24 +1,14 @@
 # README
+这是出于学习Rails框架而做的玩具博客应用。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 该应用有以下功能：
+- 基于devise的基本的注册登录功能
+- 登录后可使用的发文、评论以及回复功能
+- 某博客内的文章所使用的tag统计以及根据tag在该博客内搜索拥有该tag的文章的功能
+- 博主禁止某用户在其博客进行评论或回复的功能以及延长该处罚时间的功能
+- 根据tag在网站内搜索文章或用户的功能
+- 基于postgresql的FullTextSearch功能(文章：标题、标签、内容，用户：用户名、标签、简历)
+- 关注功能以及对应的通知功能
+- 用户举报文章、评论和回复的功能
+- 管理员可见的用户被举报成功的统计（总次数和最近一个月总次数）
+- 管理员禁止某用户在全站内的一切发文、评论和回复的功能以及延长该处罚时间的功能
