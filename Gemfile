@@ -31,7 +31,7 @@ gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # Devise
-gem 'devise', '~> 4.6'
+gem 'devise', '~> 4.7'
 # will_paginate
 gem 'will_paginate'
 
